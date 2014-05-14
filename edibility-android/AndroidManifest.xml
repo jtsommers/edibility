@@ -22,6 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="edu.ucsc.teambacon.edibility.FoodListActivity"
+            android:label="@string/title_activity_food_list"
+            android:parentActivityName="edu.ucsc.teambacon.edibility.LocationSelectionActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ucsc.teambacon.edibility.LocationSelectionActivity" />
+        </activity>
+        <activity
+            android:name="edu.ucsc.teambacon.edibility.SubscribedAlertsActivity"
+            android:label="@string/title_activity_subscribed_alerts" >
+        </activity>
     </application>
 
 </manifest>
