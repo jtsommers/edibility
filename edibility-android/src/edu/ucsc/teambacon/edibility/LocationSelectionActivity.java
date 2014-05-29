@@ -3,6 +3,7 @@ package edu.ucsc.teambacon.edibility;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,5 +61,45 @@ public class LocationSelectionActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+	
+	public void porter(View v)
+	{
+		Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
+		intent.putExtra("name", "porter");
+		startActivity(intent);
+	}
 
+	public void eight(View v)
+	{
+		Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
+		intent.putExtra("name", "eight");
+		startActivity(intent);
+	}
+
+	public void nine(View v)
+	{
+		Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
+		intent.putExtra("name", "nine");
+		startActivity(intent);
+	}
+	
+	public void crown(View v)
+	{
+		Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
+		intent.putExtra("name", "crown");
+		startActivity(intent);
+	}
+	
+	public void stevenson(View v)
+	{
+		Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
+		intent.putExtra("name", "stevenson");
+		startActivity(intent);
+	}
+	
+	public void alerts(View v)
+	{
+		Intent intent = new Intent(getBaseContext(), SubscribedAlertsActivity.class);
+		startActivity(intent);
+	}
 }
