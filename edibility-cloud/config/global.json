@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "_default": {
+            "link": "edibility"
+        }, 
+        "edibility": {
+            "applicationId": "ltuDyC6qDfdL7QLia9LIBF78VFKUPFmgluC6sftx", 
+            "masterKey": "8ZjscDu46Jiu6GCzWq9rhT4QUipsax4yJD1iKw9L"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.18"
+    }
+}

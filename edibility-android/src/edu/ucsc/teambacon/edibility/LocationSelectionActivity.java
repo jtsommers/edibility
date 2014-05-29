@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
 
 public class LocationSelectionActivity extends ActionBarActivity {
 
@@ -23,6 +27,12 @@ public class LocationSelectionActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		// Initialize Parse (Push Notifications)
+		Parse.initialize(this, "ltuDyC6qDfdL7QLia9LIBF78VFKUPFmgluC6sftx", "VVG8Xk6L3j6kZ7jsuaWSJL1GYIk69tdSrmPZwSnv");
+		// Set default activity to handle push notifications
+		PushService.setDefaultPushCallback(this, LocationSelectionActivity.class);
+		ParseInstallation.getCurrentInstallation().saveInBackground();
 	}
 
 	@Override
