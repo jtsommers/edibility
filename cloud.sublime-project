@@ -1,0 +1,16 @@
+{
+	"folders":
+	[
+		{
+			"path": "edibility-cloud"
+		}
+	],
+	"ternjs": {
+		"include": ["*.js"],
+		"loadEagerly": [
+			"parse-js-sdk/parse-1.2.18.js"
+		],
+		"plugins": {
+		}
+	}
+}
