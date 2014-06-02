@@ -8,5 +8,6 @@
     <string name="title_activity_subscribed_alerts">SubscribedAlertsActivity</string>
     <string name="ok">ok</string>
 	<string name="cancel">cancel</string>
+    <string name="placeholder">Placeholder</string>
 
 </resources>
