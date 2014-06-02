@@ -102,10 +102,10 @@ public class LocationSelectionActivity extends ActionBarActivity {
 		startActivity(intent);
 	}
 	
-	public void stevenson(View v)
+	public void cowell(View v)
 	{
 		Intent intent = new Intent(getBaseContext(), FoodListActivity.class);
-		intent.putExtra("name", "stevenson");
+		intent.putExtra("name", "cowell");
 		startActivity(intent);
 	}
 	
