@@ -29,7 +29,6 @@ import edu.ucsc.teambacon.edibility.deserialization.*;
 public class FoodListActivity extends ActionBarActivity {
 
 	private static final String DOWNLOAD_URL = "http://www.kimonolabs.com/api/6guup5y4?apikey=e9c97d5dd3b6d537d322c030e00fa7a6";
-	static HashMap<String, String> diningHalls;
 	public static final String LOG_TAG = "FOODLIST";
 
 	private ChoiceAdapter adapter;
@@ -163,18 +162,6 @@ public class FoodListActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_food_list,
 					container, false);
 			return rootView;
-		}
-	}
-
-	// Populate the hashmap with dining hall codes used by FoodPro
-	private static void createLocationCodeMap() {
-		if (diningHalls == null) {
-			diningHalls = new HashMap<String, String>();
-			diningHalls.put("cowell", "05");
-			diningHalls.put("crown", "20");
-			diningHalls.put("eight", "30");
-			diningHalls.put("nine", "40");
-			diningHalls.put("porter", "25");
 		}
 	}
 
