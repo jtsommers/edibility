@@ -6,5 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_food_list">FoodListActivity</string>
     <string name="title_activity_subscribed_alerts">SubscribedAlertsActivity</string>
+    
+    <string name="placeholder">Placeholder</string>
 
 </resources>
