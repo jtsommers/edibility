@@ -21,6 +21,8 @@ var Menu = function(college, successCallback, errorCallback) {
 	this.download();
 };
 
+Menu.DINING_HALLS = DINING_HALLS;
+
 Menu.prototype.download = function() {
 	var self = this;
 	Parse.Cloud.httpRequest({

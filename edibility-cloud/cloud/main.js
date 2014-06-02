@@ -48,8 +48,8 @@ Parse.Cloud.job("testjob", function(request, response) {
 });
 
 Parse.Cloud.define("testmenu", function(request, response) {
-	var menuLib = require('cloud/menu.js');
-	var testMenu = new menuLib.Menu(
+	var Menu = require('cloud/menu.js').Menu;
+	var testMenu = new Menu(
 		'eight', 
 		function(){
 			response.success("Success downloading test menu");
