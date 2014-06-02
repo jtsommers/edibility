@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class FoodListActivity extends ActionBarActivity {
-	
-	static HashMap<String, String> diningHalls;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +22,6 @@ public class FoodListActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		createLocationCodeMap();
 	}
 
 	@Override
@@ -64,16 +61,4 @@ public class FoodListActivity extends ActionBarActivity {
 		}
 	}
 	
-	// Populate the hashmap with dining hall codes used by FoodPro
-	private static void createLocationCodeMap() {
-		if (diningHalls == null) {
-			diningHalls = new HashMap<String, String>();
-			diningHalls.put("cowell", "05");
-			diningHalls.put("crown", "20");
-			diningHalls.put("eight", "30");
-			diningHalls.put("nine", "40");
-			diningHalls.put("porter", "25");
-		}
-	}
-
 }

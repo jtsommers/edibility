@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="names">
+        <item>"Porter/Kresge"</item>
+        <item>"Eight/Oakes"</item>
+        <item>"Nine/Ten"</item>
+        <item>"Crown/Merril"</item>
+        <item>"Stevenson/Cowell"</item>
+    </string-array>    
+</resources>
