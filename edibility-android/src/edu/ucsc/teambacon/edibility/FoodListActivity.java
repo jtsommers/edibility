@@ -50,13 +50,10 @@ public class FoodListActivity extends ActionBarActivity {
 		createLocationCodeMap();
 		list = new ArrayList<KimonoData>();
 	}
-
 	
 	protected void onResume() {
 		super.onResume();
-		Log.i(LOG_TAG,"2 - onResuem");
-		
-		
+	
 		// Sanity check
 		if (list == null) {
 			list = new ArrayList<KimonoData>();
