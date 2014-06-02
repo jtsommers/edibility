@@ -33,6 +33,8 @@ public class LocationSelectionActivity extends ActionBarActivity {
 		// Set default activity to handle push notifications
 		PushService.setDefaultPushCallback(this, LocationSelectionActivity.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
+		// TODO: Remove this test subscription
+		PushService.subscribe(getApplicationContext(), "testchannel", LocationSelectionActivity.class);
 	}
 
 	@Override
