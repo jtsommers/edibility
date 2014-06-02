@@ -44,7 +44,6 @@ public class FoodListActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		createLocationCodeMap();
 		list = new ArrayList<String>();
 	}
 
