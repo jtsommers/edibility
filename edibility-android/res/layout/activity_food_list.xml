@@ -6,12 +6,6 @@
     tools:context="edu.ucsc.teambacon.edibility.FoodListActivity"
     tools:ignore="MergeRootFrame" >
     
-       <Button
-           android:id="@+id/listButton"
-           android:layout_width="242dp"
-           android:layout_height="58dp"
-           android:layout_alignParentRight="true"
-           android:layout_marginRight="21dp"
-           android:text="@string/placeholder" />
+      
 
 </FrameLayout>
