@@ -38,9 +38,6 @@ public class FoodListActivity extends ActionBarActivity {
 	public ArrayList<String> list; // as global
 	private BackgroundDownloader downloader;
 	
-	private String[] header = new String[]{"Breakfast", "Dinner", "Lunch"};
-	
-	
 	// dHall will get the dHall code, and be appended to DOWNLOAD_URL,  
 	// without dHall code, the sample data will be fetched.
 	public String dHall = "&locationNum=";
@@ -61,6 +58,7 @@ public class FoodListActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		Log.d(LOG_TAG," stop 0000000000 ");
 		list = new ArrayList<String>();
 	
 	}
@@ -113,42 +111,51 @@ public class FoodListActivity extends ActionBarActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+
+			
 			// TODO: This is a temporary measure to list only the first meal
 			if (data != null) {
-				ArrayList<MealFoodList> foodList = data.results.food;	
-				
-				// stores the mis-ordered dinner items.
-				ArrayList<String> dinnerItem = new ArrayList<String>(); 
+				ParseResults foodList = data.results;	
+
+				int numMeals = foodList.food.size();
+		
+				ArrayList <String> item = new ArrayList<String>();
 				
 				if (list == null) {
 					list = new ArrayList<String>();
 				} else {
 					list.clear();
 				}
-
-				for (int i = 0; i < foodList.size(); i++) {
-
-					ArrayList <String> item = foodList.get(i).allFood;
-					
-					if ( i == 1 ){	
-						dinnerItem.add(header[i]);
-						
-						for (int k = 0; k < item.size(); k++ ){
-							dinnerItem.add(item.get(k));
-						}
-					}
-					else{
-						list.add(header[i]); // add the title: Breakfast, Lunch
-						for (int j = 0; j < item.size(); j++){			
-							list.add(item.get(j));
-						}
-					}
-
-				}// */
 			
-				for ( int i = 0; i < dinnerItem.size(); i++ ){
-					list.add(dinnerItem.get(i));
+				if ( numMeals  > 1){ 
+					item = foodList.food.get(numMeals-1).allFood;
+					list.add(foodList.meals.get(numMeals-2).mealName);
+					for ( int i = 0; i < item.size(); i++){
+						list.add(item.get(i));
+					}
+						
+					item = foodList.food.get(numMeals-2).allFood;
+					list.add(foodList.meals.get(numMeals-1).mealName);
+					for ( int i = 0; i < item.size(); i++){
+						list.add(item.get(i));
+					}
+					if (numMeals > 2){
+						item = foodList.food.get(0).allFood;
+						list.add(0,foodList.meals.get(0).mealName);
+						for ( int i = 0; i < item.size(); i++){
+							list.add(1,item.get(i));
+						}
+					}	
 				}
+				else{ // only one meal
+					item = foodList.food.get(0).allFood;
+					list.add(0,foodList.meals.get(0).mealName);
+					for ( int i = 0; i < item.size(); i++){
+						list.add(item.get(i));
+					}	
+				}
+					
 				adapter.notifyDataSetChanged();
 			} else {
 				Log.d(LOG_TAG, "Data not set");
@@ -213,6 +220,7 @@ public class FoodListActivity extends ActionBarActivity {
 	
 			LinearLayout newView;
 	
+		//	String item = getItem(position);
 			String item = getItem(position);
 
 			// Inflate a new view if necessary.
@@ -229,7 +237,7 @@ public class FoodListActivity extends ActionBarActivity {
 			Button b = (Button) newView.findViewById(R.id.listButton);
 		
 			b.setText(item.toString());
-       
+			
 			// Sets a listener for the button, and a tag for the button as well.
 			b.setTag(Integer.toString(position));
 			b.setOnClickListener(new View.OnClickListener() {
@@ -242,9 +250,10 @@ public class FoodListActivity extends ActionBarActivity {
 					String item = getItem(pos); // item is the name of food
 
 					// if the name matches the header, do nothing
-					for ( int i = 0; i< header.length; i++)
-						if ( item.compareTo(header[i]) == 0)
-							return;
+					if ( item.contains("Lunch") || item.contains("Breakfast") ||
+						   item.contains("Dinner")){
+						return;
+					}
 
 					Intent intent = new Intent(getApplicationContext(),
 							SubscribedAlertsActivity.class);
