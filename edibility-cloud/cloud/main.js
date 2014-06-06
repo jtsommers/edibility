@@ -60,15 +60,32 @@ Parse.Cloud.define("testmenu", function(request, response) {
 	);
 });
 
+Parse.Cloud.job("notifybreakfast", function(request, response) {
+	var Menu = require('cloud/menu.js').Menu;
+	Menu.notifyAllForMeal(
+		"breakfast", 
+		{
+			"success": function() {
+				response.success("All notifications for breakfast sent");
+			},
+			"error": function(error) {
+				response.error(error);
+			}
+		}
+	);
+});
+
 Parse.Cloud.define("notifybreakfast", function(request, response) {
 	var Menu = require('cloud/menu.js').Menu;
-	var c8menu = new Menu(
-		'eight',
-		function() {
-			c8menu.notifyForMeal('breakfast');
-			response.success("Sent notifications for breakfast");
-		},
-		function(error) {
-			response.error(error);
-		});
+	Menu.notifyAllForMeal(
+		"breakfast", 
+		{
+			"success": function() {
+				response.success("All notifications for breakfast sent");
+			},
+			"error": function(error) {
+				response.error(error);
+			}
+		}
+	);
 });

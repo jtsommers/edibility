@@ -24,7 +24,8 @@ exports.sendPush = function(channel, food, location) {
 		{
 			success: function() {
 				// Push was successful
-				response.success("Test Push Sent");
+				// Purposefully empty, I think
+				// console.log("Push sent to " + channel);
 			},
 			error: function(error) {
 				// Handle error

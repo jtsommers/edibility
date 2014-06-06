@@ -21,6 +21,59 @@ var Menu = function(college, successCallback, errorCallback) {
 	this.download();
 };
 
+// Static function to create a new menu and send notifications out for a specific meal
+Menu.notifyCollegeForMeal = function(college, meal, callbacks) {
+	console.log("Sending out notifications for " + college);
+	var m = new Menu(
+		college, 
+		function() {
+			m.notifyForMeal(meal);
+			callbacks.success();
+		}, 
+		function(error) {
+			callbacks.error(error);
+		}
+	);
+};
+
+Menu.notifyAllForMeal = function(meal, callbacks) {
+	var diningHalls = Object.keys(Menu.DINING_HALLS);
+	var locationCount = diningHalls.length;
+	// Callbacks keep track of successess and failures and call appropriate callbacks 
+	// after callbacks for all menus have been triggered
+	var successCount = 0, errorCount = 0;
+	var callbackTracking = {
+		"success": function() {
+			successCount++;
+			if (successCount >= locationCount) {
+				// All dining halls notified successfully
+				callbacks.success();
+			} else if ((successCount + errorCount) >= locationCount) {
+				// Some dining halls were notified successfully
+				console.warn("Menu::notifyAllForMeal error count " + errorCount);
+				callbacks.error(errorCount + " dining halls failed to send notifications");
+			}
+		},
+		"error": function(error) {
+			// Something went wrong
+			console.log(error);
+			errorCount++;
+			// Notify callback if all menus have been triggered
+			if ((successCount + errorCount) >= locationCount) {
+				if (successCount === 0) {
+					console.error("No successful dining hall notifications");
+				} else {
+					console.warn("Menu::notifyAllForMeal error count " + errorCount);
+				}
+				callbacks.error(errorCount + " dining halls failed to send notifications");
+			}
+		}
+	};
+	for (var i = 0; i < locationCount; i++) {
+		Menu.notifyCollegeForMeal(diningHalls[i], meal, callbackTracking);
+	}
+};
+
 Menu.DINING_HALLS = DINING_HALLS;
 
 Menu.prototype.download = function() {
@@ -38,7 +91,7 @@ Menu.prototype.download = function() {
 				// Do post download processing
 				self.onDownloadSuccess();
 				// Call the success callback
-				self.success(); // Temporary, don't callback with response text
+				self.success();
 			} else {
 				self.error("Data could not parse");
 			}
@@ -136,7 +189,6 @@ Menu.prototype.notifyForMeal = function(mealName) {
 	var foods = this[this.meals[mealIndex]];
 	for (i = 0; i < foods.length; i++) {
 		var food = foods[i];
-		console.log("Sending notification for " + food);
 		var channel = Util.channelName(this.location, food);
 		Util.sendPush(channel, food, this.college);
 	}
