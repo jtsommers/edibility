@@ -61,6 +61,7 @@ Menu.prototype.onDownloadSuccess = function() {
 			this.sanitizeData(km.results);
 		} else {
 			// Non-success values indicative of a closed dining hall
+			this.closed = true;
 			console.log("Kimono data indicates " + this.college + " is closed");
 		}
 	} else {
@@ -70,7 +71,7 @@ Menu.prototype.onDownloadSuccess = function() {
 
 Menu.prototype.sanitizeData = function(data) {
 	// Confirm existence of meal names
-	if (data.meals && data.meals.length() > 0) {
+	if (data.meals && data.meals.length > 0) {
 		this.meals = [];
 		for (var i in data.meals) {
 			if (data.meals.hasOwnProperty(i)) {
@@ -81,7 +82,7 @@ Menu.prototype.sanitizeData = function(data) {
 		}
 		// Save food to an associative array based on which meal
 		// This is going to look a bit crazy because dinner and lunch arrays get reversed in Kimono
-		var numMeals = this.meals.length();
+		var numMeals = this.meals.length;
 		if (numMeals > 1) {
 			// This should cover all cases, even weekends have lunch(brunch) and dinner
 			// Last food object, this references lunch
@@ -105,10 +106,39 @@ Menu.prototype.sanitizeData = function(data) {
 };
 
 Menu.prototype.loadMeal = function(mealName, foodObject) {
-	if (foodObject.firstItem !== "" && foodObject.allFoods.length() > 0) {
-		this[mealName] = foodObject.allFoods;
+	if (foodObject.firstItem !== "" && foodObject.allFood.length > 0) {
+		this[mealName] = foodObject.allFood;
 	} else {
 		console.error("No food detected trying to load " + mealName);
+	}
+};
+
+Menu.prototype.notifyForMeal = function(mealName) {
+	// Dining hall is closed, break to avoid sending false notifications
+	if (this.closed) {
+		return;
+	}
+	var Util = require('cloud/util.js');
+	// Search for meal we'd like to send out notifications for
+	var mealIndex = -1;
+	for (var i = 0; i < this.meals.length; i++) {
+		if (this.meals[i].toLowerCase().indexOf(mealName) !== -1) {
+			mealIndex = i;
+			break;
+		}
+	}
+	// Meal not found, oops
+	if (mealIndex === -1) {
+		console.error("Could not find meal " + mealName);
+		return;
+	}
+	// Load the food items for the meal
+	var foods = this[this.meals[mealIndex]];
+	for (i = 0; i < foods.length; i++) {
+		var food = foods[i];
+		console.log("Sending notification for " + food);
+		var channel = Util.channelName(this.location, food);
+		Util.sendPush(channel, food, this.college);
 	}
 };
 

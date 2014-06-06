@@ -12,8 +12,8 @@ public class Utilities {
 		food.toLowerCase(Locale.US);
 		food.replaceAll(" ", "");
 		
-		//create output string that follows "dininghallcode_nameoffood"
-		String out = "";
+		//create output string that follows "foodalert_dininghallcode_nameoffood"
+		String out = "foodalert_";
 		out.concat(getLocationCode(dhall));
 		out.concat("_");
 		out.concat(food);

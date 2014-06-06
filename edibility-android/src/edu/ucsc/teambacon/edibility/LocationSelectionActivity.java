@@ -34,7 +34,7 @@ public class LocationSelectionActivity extends ActionBarActivity {
 		PushService.setDefaultPushCallback(this, LocationSelectionActivity.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 		// TODO: Remove this test subscription
-		PushService.subscribe(getApplicationContext(), "testchannel", LocationSelectionActivity.class);
+		PushService.unsubscribe(getApplicationContext(), "testchannel");
 	}
 
 	@Override
