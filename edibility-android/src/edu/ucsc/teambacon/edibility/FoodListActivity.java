@@ -192,10 +192,15 @@ public class FoodListActivity extends ActionBarActivity {
 				if (section == 0)
 					return;
 
+				//display  dialog
+				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
+			    confirmFood.setFoodName("French Toast");
+			    confirmFood.show(getSupportFragmentManager(), "confirm food");
+				
 				// ///// ==============
-				Intent intent = new Intent(getApplicationContext(),
-						SubscribedAlertsActivity.class);
-				startActivity(intent);
+//				Intent intent = new Intent(getApplicationContext(),
+//						SubscribedAlertsActivity.class);
+//				startActivity(intent);
 
 				// ///// ===============
 

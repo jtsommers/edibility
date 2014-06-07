@@ -8,7 +8,7 @@ public class SavedPreferences {
 	public ArrayList<FoodItem> savedFood;
 	
 	protected SavedPreferences() {
-		
+		this.savedFood = new ArrayList<FoodItem>();
 	}
 	
 	public static SavedPreferences getInstance() {
