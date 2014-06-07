@@ -56,26 +56,12 @@ public class FoodListActivity extends ActionBarActivity {
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			dHallCode = Utilities.getLocationCode(extras.getString("name"));
+			String dHallName = extras.getString("name");
+			dHallCode = Utilities.getLocationCode(dHallName);
 			dHall += (dHallCode);
-
-			switch (dHallCode) {
-				case "05":
-					setTitle(R.string.cowell);
-					break;
-				case "20":
-					setTitle(R.string.crown);
-					break;
-				case "25":
-					setTitle(R.string.porter);
-					break;
-				case "30":
-					setTitle(R.string.eight);
-					break;
-				case "40":
-					setTitle(R.string.nine);
-					break;
-			}
+			
+			// Set the action bar title
+			setTitle(getStringResourceByName(dHallName));
 		}
 
 		if (downloader == null
@@ -86,6 +72,15 @@ public class FoodListActivity extends ActionBarActivity {
 			// downloader.execute("http://www.kimonolabs.com/api/6guup5y4?apikey=e9c97d5dd3b6d537d322c030e00fa7a6");
 		}
 
+	}
+	
+	// Function to get a string resource R.id."aString" by passing "aString"
+	// http://stackoverflow.com/a/11595723
+	private String getStringResourceByName(String aString) {
+		String packageName = getPackageName();
+		int resId = getResources()
+				.getIdentifier(aString, "string", packageName);
+		return getString(resId);
 	}
 
 	// it's called inside of the execute function
