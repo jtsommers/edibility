@@ -243,6 +243,7 @@ public class FoodListActivity extends ActionBarActivity {
 			// Sanity checks
 			if (data != null && data.results.meals != null && data.results.meals.size() > 0) {
 				meals = new ArrayList<String>();
+				foods = new ArrayList<MealFoodList>();
 				ArrayList<MealType> m = data.results.meals;
 				// Push meal name onto list
 				for (int i = 0; i < m.size(); i++) {
