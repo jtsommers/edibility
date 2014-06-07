@@ -32,28 +32,50 @@ import edu.ucsc.teambacon.edibility.headerlistview_source.*;
 
 public class FoodListActivity extends ActionBarActivity {
 
-	private static final String DOWNLOAD_URL = "http://www.kimonolabs.com/api/6guup5y4?apikey=e9c97d5dd3b6d537d322c030e00fa7a6";
+	private static final String DOWNLOAD_URL 
+	                     = "http://www.kimonolabs.com/api/6guup5y4?apikey=e9c97d5dd3b6d537d322c030e00fa7a6";
 
 	public static final String LOG_TAG = "FOODLIST";
 
 	private HeaderListView list;
 	private BackgroundDownloader downloader;
-	private KimonoData data;
+
+	private KimonoData data = null;
+
+
 	private ArrayList<MealFoodList> foods;
 	private ArrayList<String> meals;
+
 	public String dHall = "&locationNum=";
-	public String dHallName;
+	public String dHallCode = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			dHallName = (extras.getString("name"));
-			dHall += Utilities.getLocationCode(dHallName);
+			dHallCode = Utilities.getLocationCode(extras.getString("name"));
+			dHall += (dHallCode);
 
+			switch (dHallCode) {
+				case "05":
+					setTitle(R.string.cowell);
+					break;
+				case "20":
+					setTitle(R.string.crown);
+					break;
+				case "25":
+					setTitle(R.string.porter);
+					break;
+				case "30":
+					setTitle(R.string.eight);
+					break;
+				case "40":
+					setTitle(R.string.nine);
+					break;
+			}
 		}
 
 		if (downloader == null
@@ -66,92 +88,94 @@ public class FoodListActivity extends ActionBarActivity {
 
 	}
 
+	// it's called inside of the execute function
 	public void createHeaderListView() {
 
 		list = new HeaderListView(this);
 		list.setAdapter(new SectionAdapter() {
+			
 			@Override
 			public int numberOfSections() {
-				int numMeal = data.results.food.size() + 1;
-				return numMeal;
+				if (data != null)  return data.results.food.size();
+				
+				return 1;
 			}
 
 			@Override
 			public int numberOfRows(int section) {
-				int numFood = 1;
+				if (data != null) {
+					String mealName = data.results.meals.get(section).mealName;
 
-				if (section > 0) {
-					String mealName = data.results.meals.get(section - 1).mealName;
-					if (mealName.contains("Lunch"))
-						numFood = data.results.food.get(section).allFood.size();
-					else if (mealName.contains("Dinner"))
-						numFood = data.results.food.get(section - 2).allFood
-								.size();
-					else // breakfast
-						numFood = data.results.food.get(section - 1).allFood
-								.size();
+					if (mealName.contains("Lunch")) {
+						int mealLength_1 = data.results.food.get(section).allFood.size();
+						int mealLength_2 = data.results.food.get(section + 1).allFood.size();
+
+						return Math.max(mealLength_1, mealLength_2);
+						
+					} else if (mealName.contains("Dinner")) {
+						int mealLength_1 = data.results.food.get(section).allFood.size();
+						int mealLength_2 = data.results.food.get(section - 1).allFood.size();
+
+						return Math.min(mealLength_1, mealLength_2);
+					}
+
+					else // breakfast	
+						return data.results.food.get(section).allFood.size();
 				}
 
-				return numFood;
+				return 0;
 			}
 
 			@Override
-			public Object getRowItem(int section, int row) {
-				return null;
-			}
+			public Object getRowItem(int section, int row) { return null; }
 
 			@Override
-			public boolean hasSectionHeaderView(int section) {
-				return true;
-			}
+			public boolean hasSectionHeaderView(int section) { return true; }
 
 			@Override
-			public View getRowView(int section, int row, View convertView,
-					ViewGroup parent) {
+			public View getRowView(int section, int row, View convertView, ViewGroup parent) {
 
 				if (convertView == null) {
-					convertView = (TextView) getLayoutInflater().inflate(
-							getResources().getLayout(
+					convertView = (TextView) getLayoutInflater().inflate( getResources().getLayout(
 									android.R.layout.simple_list_item_1), null);
 				}
+				
+				String mealName = data.results.meals.get(section).mealName;
+				if (mealName.contains("Lunch")) {
 
-				if (section > 0) {
-					String mealName = data.results.meals.get(section - 1).mealName;
+					int mealLength_1 = data.results.food.get(section).allFood.size();
+					int mealLength_2 = data.results.food.get(section + 1).allFood.size();
 
-					if (mealName.contains("Lunch"))
-						((TextView) convertView).setText(data.results.food
-								.get(section).allFood.get(row));
-
-					else if (mealName.contains("Dinner"))
-						((TextView) convertView).setText(data.results.food
-								.get(section - 2).allFood.get(row));
-
+					if (mealLength_1 > mealLength_2)
+						((TextView) convertView).setText(data.results.food.get(section).allFood.get(row));
 					else
-						// if (mealName.contains("Breakfast") )
-						((TextView) convertView).setText(data.results.food
-								.get(section - 1).allFood.get(row));
-				} else {
-					((TextView) convertView).setText("Food Item");
-
+						((TextView) convertView).setText(data.results.food.get(section + 1).allFood.get(row));
 				}
 
+				else if (mealName.contains("Dinner")) {
+
+					int mealLength_1 = data.results.food.get(section).allFood .size();
+					int mealLength_2 = data.results.food.get(section - 1).allFood.size();
+
+					if (mealLength_1 < mealLength_2)
+						((TextView) convertView).setText(data.results.food.get(section).allFood.get(row));
+					else
+						((TextView) convertView).setText(data.results.food.get(section - 1).allFood.get(row));
+
+				} else // if (mealName.contains("Breakfast") )
+					((TextView) convertView).setText(data.results.food.get(section).allFood.get(row));
+ 
 				return convertView;
 			}
 
 			@Override
-			public int getSectionHeaderViewTypeCount() {
-
-				return 2;
-			}
+			public int getSectionHeaderViewTypeCount() { return 2; }
 
 			@Override
-			public int getSectionHeaderItemViewType(int section) {
-				return section % 2;
-			}
+			public int getSectionHeaderItemViewType(int section) { return section % 2; }
 
 			@Override
-			public View getSectionHeaderView(int section, View convertView,
-					ViewGroup parent) {
+			public View getSectionHeaderView(int section, View convertView, ViewGroup parent) {
 
 				if (convertView == null) {
 					convertView = (TextView) getLayoutInflater().inflate(
@@ -161,24 +185,30 @@ public class FoodListActivity extends ActionBarActivity {
 
 				switch (section) {
 				case 0:
-					convertView.setBackgroundColor(getResources().getColor(
-							R.color.holo_red_light));
-					((TextView) convertView).setText(dHallName);
+					if (data != null){
+						convertView.setBackgroundColor(getResources().getColor(R.color.holo_orange_light));
+					
+						((TextView) convertView).setText(data.results.meals.get(0).mealName);
+					}
+					else{
+						convertView.setBackgroundColor(getResources().getColor(R.color.silver));
+						((TextView) convertView).setText("The dinning hall is closed today.");
+					}
 					break;
+					
 				case 1:
-					convertView.setBackgroundColor(getResources().getColor(
-							R.color.holo_orange_light));
-					((TextView) convertView).setText(data.results.meals.get(0).mealName);
-					break;
-				case 2:
+					convertView.setBackgroundColor(getResources().getColor(R.color.holo_blue_light));
 					((TextView) convertView).setText(data.results.meals.get(1).mealName);
-					convertView.setBackgroundColor(getResources().getColor(
-							R.color.holo_green_light));
+
 					break;
-				case 3:
-					convertView.setBackgroundColor(getResources().getColor(
-							R.color.holo_blue_light));
+					
+				case 2:
 					((TextView) convertView).setText(data.results.meals.get(2).mealName);
+					convertView.setBackgroundColor(getResources().getColor(R.color.holo_green_light));
+					break;
+					
+				case 3:
+					convertView.setBackgroundColor(getResources().getColor(R.color.holo_red_light));
 					break;
 				}
 				return convertView;
@@ -196,14 +226,7 @@ public class FoodListActivity extends ActionBarActivity {
 				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
 			    confirmFood.setFoodName("French Toast");
 			    confirmFood.show(getSupportFragmentManager(), "confirm food");
-				
-				// ///// ==============
-//				Intent intent = new Intent(getApplicationContext(),
-//						SubscribedAlertsActivity.class);
-//				startActivity(intent);
-
-				// ///// ===============
-
+			
 				// Toast.makeText(FoodListActivity.this, "Section " + section +
 				// " Row " + row, Toast.LENGTH_SHORT).show();
 			}
@@ -226,12 +249,10 @@ public class FoodListActivity extends ActionBarActivity {
 		@Override
 		void execute(String s) {
 			// Sanitize string to remove empty data
-
 			s = s.replaceAll(
 					",\\n.*\\{\\n.*\\n.*\"allFood\": \"\",\\n.*\\n.*\\}", "");
 			Gson gson = new Gson();
 
-			// KimonoData data = null;
 			data = null;
 			try {
 				data = gson.fromJson(s, KimonoData.class);
@@ -240,7 +261,13 @@ public class FoodListActivity extends ActionBarActivity {
 				e.printStackTrace();
 			}
 
+
+			if (data.lastrunstatus.equalsIgnoreCase("failure")) {
+				data = null;
+			}
+
 			sanitizeData();
+
 			createHeaderListView();
 		}
 		
@@ -287,6 +314,7 @@ public class FoodListActivity extends ActionBarActivity {
 
 	}
 
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
