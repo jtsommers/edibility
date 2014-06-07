@@ -3,7 +3,10 @@
 exports.channelName = function(locationCode, foodItem) {
 	var channel = "foodalert_" + locationCode + '_' + foodItem;
 	// Strip whitespace and convert to lower case
-	return channel.replace(/\s/g, "").toLowerCase();
+	channel = channel.replace(/\s/g, "").toLowerCase();
+	// Strip special characters
+	channel = channel.replace(/[,.'";:?!\/&@#$%^*()]/g, "");
+	return channel;
 };
 
 exports.sendPush = function(channel, alert) {
@@ -29,7 +32,7 @@ exports.sendPush = function(channel, alert) {
 			},
 			error: function(error) {
 				// Handle error
-				console.error("Push error sending to " + channel);
+				console.error(error);
 			}
 		}
 	);
