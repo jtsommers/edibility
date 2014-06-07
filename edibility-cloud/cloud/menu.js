@@ -36,6 +36,20 @@ Menu.notifyCollegeForMeal = function(college, meal, callbacks) {
 	);
 };
 
+Menu.notifyCollegeForMealGroup = function(college, meal, callbacks) {
+	console.log("Sending out grouped notification for " + college);
+	var m = new Menu(
+		college, 
+		function() {
+			m.notifyForMealGroup(meal);
+			callbacks.success();
+		}, 
+		function(error) {
+			callbacks.error(error);
+		}
+	);
+};
+
 Menu.notifyAllForMeal = function(meal, callbacks) {
 	var diningHalls = Object.keys(Menu.DINING_HALLS);
 	var locationCount = diningHalls.length;
@@ -71,6 +85,44 @@ Menu.notifyAllForMeal = function(meal, callbacks) {
 	};
 	for (var i = 0; i < locationCount; i++) {
 		Menu.notifyCollegeForMeal(diningHalls[i], meal, callbackTracking);
+	}
+};
+
+Menu.notifyMealsOnly = function(meal, callbacks) {
+	var diningHalls = Object.keys(Menu.DINING_HALLS);
+	var locationCount = diningHalls.length;
+	// Callbacks keep track of successess and failures and call appropriate callbacks 
+	// after callbacks for all menus have been triggered
+	var successCount = 0, errorCount = 0;
+	var callbackTracking = {
+		"success": function() {
+			successCount++;
+			if (successCount >= locationCount) {
+				// All dining halls notified successfully
+				callbacks.success();
+			} else if ((successCount + errorCount) >= locationCount) {
+				// Some dining halls were notified successfully
+				console.warn("Menu::notifyForMealsOnly error count " + errorCount);
+				callbacks.error(errorCount + " dining halls failed to send notifications");
+			}
+		},
+		"error": function(error) {
+			// Something went wrong
+			console.log(error);
+			errorCount++;
+			// Notify callback if all menus have been triggered
+			if ((successCount + errorCount) >= locationCount) {
+				if (successCount === 0) {
+					console.error("No successful dining hall notifications");
+				} else {
+					console.warn("Menu::notifyAllForMeal error count " + errorCount);
+				}
+				callbacks.error(errorCount + " dining halls failed to send notifications");
+			}
+		}
+	};
+	for (var i = 0; i < locationCount; i++) {
+		Menu.notifyCollegeForMealGroup(diningHalls[i], meal, callbackTracking);
 	}
 };
 
@@ -190,8 +242,41 @@ Menu.prototype.notifyForMeal = function(mealName) {
 	for (i = 0; i < foods.length; i++) {
 		var food = foods[i];
 		var channel = Util.channelName(this.location, food);
-		Util.sendPush(channel, food, this.college);
+		var alert = food + " available at " + this.college;
+		Util.sendPush(channel, alert);
 	}
+};
+
+Menu.prototype.notifyForMealGroup = function(mealName) {
+	// Dining hall is closed, break to avoid sending false notifications
+	if (this.closed) {
+		return;
+	}
+	var Util = require('cloud/util.js');
+	// Search for meal we'd like to send notifications for
+	var mealIndex = -1;
+	for (var i = 0; i < this.meals.length; i++) {
+		if (this.meals[i].toLowerCase().indexOf(mealName) !== -1) {
+			mealIndex = i;
+			break;
+		}
+	}
+	// Meal not found, oops
+	if (mealIndex === -1) {
+		console.error("Could not find meal " + mealName);
+		return;
+	}
+	// Load the food items for the meal
+	var channels = [];
+	var foods = this[this.meals[mealIndex]];
+	for (i = 0; i < foods.length; i++) {
+		var food = foods[i];
+		var channel = Util.channelName(this.location, food);
+		channels.push(channel);
+	}
+	// Send push to all channels
+	var alert = mealName.substr(0, 1).toUpperCase() + mealName.substr(1) + " food subscription available at " + this.college;
+	Util.sendPush(channels, alert);
 };
 
 Menu.prototype.success = function() {
