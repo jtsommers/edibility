@@ -8,19 +8,16 @@
     <string name="title_activity_subscribed_alerts">SubscribedAlertsActivity</string>
     <string name="ok">ok</string>
 	<string name="cancel">cancel</string>
-   
     <color name="holo_blue_light">#ff33b5e5</color>
     <color name="holo_green_light">#ff99cc00</color>
     <color name="holo_red_light">#ffff4444</color>
     <color name="holo_orange_light">#ffffbb33</color>
     <color name="silver">#C0C0C0</color>
-   
-    
-    <string name="eight">College Eight Dinning Hall</string>
-    <string name="nine">College Nine Dinning Hall</string>
-    <string name="crown">Crown Dinning Hall</string>
-    <string name="porter">Porter Dinning Hall</string>
-    <string name="cowell">Cowell Dinning Hall</string>
-    
+    <string name="cowell">Cowell/Stevenson</string>
+    <string name="crown">Crown/Merril</string>
+    <string name="eight">Eight/Oakes</string>
+    <string name="nine">Nine/Ten</string>
+    <string name="porter">Porter/Kresge</string>
+    <string name="alerts">Alerts</string>
 
 </resources>

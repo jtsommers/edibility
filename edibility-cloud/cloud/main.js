@@ -89,3 +89,23 @@ Parse.Cloud.define("notifybreakfast", function(request, response) {
 		}
 	);
 });
+
+Parse.Cloud.job("granularnotifications", function(request, response) {
+	if (request.params && request.params.meal && request.params.college) {
+		var Menu = require('cloud/menu.js').Menu;
+		Menu.notifyCollegeForMeal(
+			request.params.college, 
+			request.params.meal, 
+			{
+				"success": function() {
+					response.success("All notifications for breakfast sent");
+				},
+				"error": function(error) {
+					response.error(error);
+				}
+			}
+		);
+	} else {
+		response.error("Request parameters not properly set");
+	}
+});

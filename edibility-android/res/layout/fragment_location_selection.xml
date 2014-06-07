@@ -12,7 +12,7 @@
         android:layout_height="136dp"
         android:layout_alignTop="@+id/stevenson"
         android:layout_toRightOf="@+id/stevenson"
-        android:text="Alerts" 
+        android:text="@string/alerts" 
         android:onClick="alerts"/>
 
     <Button
@@ -21,7 +21,7 @@
         android:layout_height="135dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Porter/Kresge" 
+        android:text="@string/porter" 
         android:onClick="porter"/>
 
     <Button
@@ -30,7 +30,7 @@
         android:layout_height="136dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/porter"
-        android:text="Nine/Ten"
+        android:text="@string/nine"
         android:onClick="nine" />
 
     <Button
@@ -39,7 +39,7 @@
         android:layout_height="136dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/nine"
-        android:text="Cowell/Stevenson" 
+        android:text="@string/cowell" 
         android:onClick="cowell"/>
 
     <Button
@@ -48,7 +48,7 @@
         android:layout_height="136dp"
         android:layout_above="@+id/alerts"
         android:layout_alignLeft="@+id/alerts"
-        android:text="Crown/Merrill"
+        android:text="@string/crown"
         android:onClick="crown" />
 
     <Button
@@ -57,7 +57,7 @@
         android:layout_height="136dp"
         android:layout_alignLeft="@+id/crown"
         android:layout_alignParentTop="true"
-        android:text="Eight/Oakes" 
+        android:text="@string/eight" 
         android:onClick="eight"/>
 
 </RelativeLayout>

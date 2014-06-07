@@ -39,7 +39,13 @@ public class FoodListActivity extends ActionBarActivity {
 
 	private HeaderListView list;
 	private BackgroundDownloader downloader;
+
 	private KimonoData data = null;
+
+
+	private ArrayList<MealFoodList> foods;
+	private ArrayList<String> meals;
+
 	public String dHall = "&locationNum=";
 	public String dHallCode = null;
 
@@ -255,11 +261,54 @@ public class FoodListActivity extends ActionBarActivity {
 				e.printStackTrace();
 			}
 
+
 			if (data.lastrunstatus.equalsIgnoreCase("failure")) {
 				data = null;
 			}
 
+			sanitizeData();
+
 			createHeaderListView();
+		}
+		
+		private void sanitizeData() {
+			// Sanity checks
+			if (data != null && data.results.meals != null && data.results.meals.size() > 0) {
+				meals = new ArrayList<String>();
+				ArrayList<MealType> m = data.results.meals;
+				// Push meal name onto list
+				for (int i = 0; i < m.size(); i++) {
+					meals.add(m.get(i).mealName);
+				}
+				// Save food lists into local array "foods"
+				// Some crazy logic here to handle dinner always coming before lunch
+				int numMeals = meals.size();
+				MealFoodList breakfast = null, lunch = null, dinner = null;
+				if (numMeals > 1) {
+					// This should cover all cases, even weekends have lunch(brunch) and dinner
+					// Last food list references lunch
+					lunch = data.results.food.get(numMeals - 1);
+					// Second to last food list references dinner
+					dinner = data.results.food.get(numMeals - 2);
+					// Check for breakfast
+					if (numMeals > 2) {
+						breakfast = data.results.food.get(0);
+					}
+				} else {
+					// Only one meal, this shouldn't happen, I think, but handle it anyway
+					breakfast = data.results.food.get(0);
+				}
+				// Push meals onto food list
+				if (breakfast != null) {
+					foods.add(breakfast);
+				}
+				if (lunch != null) {
+					foods.add(lunch);
+				}
+				if (dinner != null) {
+					foods.add(dinner);
+				}
+			}
 		}
 
 	}
