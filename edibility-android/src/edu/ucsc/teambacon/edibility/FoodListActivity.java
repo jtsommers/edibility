@@ -229,13 +229,13 @@ public class FoodListActivity extends ActionBarActivity {
 					int section, int row, long id) {
 				super.onRowItemClick(parent, view, section, row, id);
 
-			
-				
-				// change to another activity
-				Intent intent = new Intent(getApplicationContext(),
-						SubscribedAlertsActivity.class);
-				startActivity(intent);
+				if (section == 0)
+					return;
 
+				//display  dialog
+				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
+			    confirmFood.setFoodName("French Toast");
+			    confirmFood.show(getSupportFragmentManager(), "confirm food");
 			
 				// Toast.makeText(FoodListActivity.this, "Section " + section +
 				// " Row " + row, Toast.LENGTH_SHORT).show();

@@ -9,6 +9,7 @@ public class FoodItem {
 	
 	public FoodItem(String name){
 		this.name = name;
+		this.locations = new ArrayList<String>();
 	}
 
 	public FoodItem(String name, ArrayList<String> locations){

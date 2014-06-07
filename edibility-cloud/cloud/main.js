@@ -90,6 +90,51 @@ Parse.Cloud.define("notifybreakfast", function(request, response) {
 	);
 });
 
+Parse.Cloud.job("notifybreakfast2", function(request, response) {
+	var Menu = require('cloud/menu.js').Menu;
+	Menu.notifyMealsOnly(
+		"breakfast", 
+		{
+			"success": function() {
+				response.success("All notifications for breakfast sent as group");
+			},
+			"error": function(error) {
+				response.error(error);
+			}
+		}
+	);
+});
+
+Parse.Cloud.job("notifylunch2", function(request, response) {
+	var Menu = require('cloud/menu.js').Menu;
+	Menu.notifyMealsOnly(
+		"lunch", 
+		{
+			"success": function() {
+				response.success("All notifications for lunch sent as group");
+			},
+			"error": function(error) {
+				response.error(error);
+			}
+		}
+	);
+});
+
+Parse.Cloud.job("notifydinner2", function(request, response) {
+	var Menu = require('cloud/menu.js').Menu;
+	Menu.notifyMealsOnly(
+		"dinner", 
+		{
+			"success": function() {
+				response.success("All notifications for dinner sent as group");
+			},
+			"error": function(error) {
+				response.error(error);
+			}
+		}
+	);
+});
+
 Parse.Cloud.job("granularnotifications", function(request, response) {
 	if (request.params && request.params.meal && request.params.college) {
 		var Menu = require('cloud/menu.js').Menu;
