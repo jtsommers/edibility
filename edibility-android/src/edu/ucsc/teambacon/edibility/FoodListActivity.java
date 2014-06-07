@@ -96,13 +96,16 @@ public class FoodListActivity extends ActionBarActivity {
 			
 			@Override
 			public int numberOfSections() {
-				if (data != null)  return data.results.food.size();
+				
+			//	if (data != null)  return data.results.food.size();
+				if (data != null) return  foods.size();
 				
 				return 1;
 			}
 
 			@Override
 			public int numberOfRows(int section) {
+				/*
 				if (data != null) {
 					String mealName = data.results.meals.get(section).mealName;
 
@@ -121,7 +124,9 @@ public class FoodListActivity extends ActionBarActivity {
 
 					else // breakfast	
 						return data.results.food.get(section).allFood.size();
-				}
+				}*/
+				if ( data != null)
+					return foods.get(section).allFood.size();
 
 				return 0;
 			}
@@ -139,6 +144,8 @@ public class FoodListActivity extends ActionBarActivity {
 					convertView = (TextView) getLayoutInflater().inflate( getResources().getLayout(
 									android.R.layout.simple_list_item_1), null);
 				}
+				
+				/*
 				
 				String mealName = data.results.meals.get(section).mealName;
 				if (mealName.contains("Lunch")) {
@@ -165,6 +172,10 @@ public class FoodListActivity extends ActionBarActivity {
 				} else // if (mealName.contains("Breakfast") )
 					((TextView) convertView).setText(data.results.food.get(section).allFood.get(row));
  
+ 				*/
+				((TextView) convertView).setText(foods.get(section).allFood.get(row));
+				 
+				
 				return convertView;
 			}
 
@@ -187,7 +198,6 @@ public class FoodListActivity extends ActionBarActivity {
 				case 0:
 					if (data != null){
 						convertView.setBackgroundColor(getResources().getColor(R.color.holo_orange_light));
-					
 						((TextView) convertView).setText(data.results.meals.get(0).mealName);
 					}
 					else{
@@ -265,8 +275,8 @@ public class FoodListActivity extends ActionBarActivity {
 			if (data.lastrunstatus.equalsIgnoreCase("failure")) {
 				data = null;
 			}
-
-			sanitizeData();
+			else
+				sanitizeData();
 
 			createHeaderListView();
 		}
@@ -284,13 +294,27 @@ public class FoodListActivity extends ActionBarActivity {
 				// Save food lists into local array "foods"
 				// Some crazy logic here to handle dinner always coming before lunch
 				int numMeals = meals.size();
+				
+				
 				MealFoodList breakfast = null, lunch = null, dinner = null;
 				if (numMeals > 1) {
+					
+					int mLength_1 = data.results.food.get(numMeals - 1).allFood.size();
+					int mLength_2 = data.results.food.get(numMeals - 2).allFood.size();
+					
+					if ( mLength_1 > mLength_2){
+						
 					// This should cover all cases, even weekends have lunch(brunch) and dinner
 					// Last food list references lunch
-					lunch = data.results.food.get(numMeals - 1);
+						lunch = data.results.food.get(numMeals - 1);
 					// Second to last food list references dinner
-					dinner = data.results.food.get(numMeals - 2);
+						dinner = data.results.food.get(numMeals - 2);
+					}
+					else {
+						lunch = data.results.food.get(numMeals - 2);
+						dinner = data.results.food.get(numMeals - 1);
+					}
+					
 					// Check for breakfast
 					if (numMeals > 2) {
 						breakfast = data.results.food.get(0);
