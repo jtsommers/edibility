@@ -66,7 +66,7 @@ public class FoodListActivity extends ActionBarActivity {
 			dHall += (dHallCode);
 			
 			// Set the action bar title
-			setTitle(getStringResourceByName(dHallName));
+			setTitle(Utilities.getStringResourceByName(dHallName));
 		}
 
 		if (downloader == null
@@ -77,15 +77,6 @@ public class FoodListActivity extends ActionBarActivity {
 			// downloader.execute("http://www.kimonolabs.com/api/6guup5y4?apikey=e9c97d5dd3b6d537d322c030e00fa7a6");
 		}
 
-	}
-	
-	// Function to get a string resource R.id."aString" by passing "aString"
-	// http://stackoverflow.com/a/11595723
-	private String getStringResourceByName(String aString) {
-		String packageName = getPackageName();
-		int resId = getResources()
-				.getIdentifier(aString, "string", packageName);
-		return getString(resId);
 	}
 
 	// it's called inside of the execute function

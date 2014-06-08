@@ -5,8 +5,11 @@ import com.parse.ParseInstallation;
 import com.parse.PushService;
 
 import android.app.Application;
+import android.content.Context;
 
 public class EdibilityApplication extends Application {
+	
+	private static Context c;
 	
 	@Override
 	public void onCreate() {
@@ -18,7 +21,13 @@ public class EdibilityApplication extends Application {
 		PushService.setDefaultPushCallback(this, LocationSelectionActivity.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 		
+		// Save the application context for passing later
+		c = getApplicationContext();
 		// Initialize shared prefs with application context
 		SavedPreferences.getInstance(getApplicationContext());
+	}
+	
+	public static Context getContext() {
+		return c;
 	}
 }

@@ -44,4 +44,12 @@ public class FoodItem {
 	public void removeLocation(String dhall){
 		this.locations.remove(dhall);
 	}
+	
+	public String getLocationDisplay() {
+		String ret = "";
+		for (String s: locations) {
+			ret += (Utilities.getStringResourceByName(s) + " ");
+		}
+		return ret;
+	}
 }

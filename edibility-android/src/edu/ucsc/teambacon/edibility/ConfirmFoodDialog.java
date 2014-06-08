@@ -25,7 +25,8 @@ public class ConfirmFoodDialog extends DialogFragment {
 	    FoodItem temp = null;
 				
 		//create a new food object
-		for(FoodItem check: SavedPreferences.getInstance().getSavedFoodList())
+	    ArrayList<FoodItem> saved = SavedPreferences.getInstance().getSavedFoodList();
+		for(FoodItem check: saved)
 		{
 			if(check.getName().equalsIgnoreCase(this.foodName))
 			{
