@@ -5,11 +5,11 @@ exports.channelName = function(locationCode, foodItem) {
 	// Strip whitespace and convert to lower case
 	channel = channel.replace(/\s/g, "").toLowerCase();
 	// Strip special characters
-	channel = channel.replace(/[,.'";:?!\/&@#$%^*()]/g, "");
+	channel = channel.replace(/[,.'";:?!\/\\&@#$%^*()]/g, "");
 	return channel;
 };
 
-exports.sendPush = function(channel, alert) {
+exports.sendPush = function(channel, alert, college) {
 	var alertString = "Food Alert! Check your subscriptions";
 	if (alert !== null) {
 		alertString = alert;
@@ -17,11 +17,18 @@ exports.sendPush = function(channel, alert) {
 	// If single element convert to array
 	// Otherwise expected input is an array
 	var c = (typeof(channel) === 'string') ? [channel] : channel;
+
+	if (college === null) {
+		college = "";
+	}
 	Parse.Push.send(
 		{
 			channels: c,
+			// This data allows the message to be intercepted by a custom receiver
 			data: {
-				alert: alertString
+				"header": alertString,
+				"action": "edu.ucsc.teambacon.edibility.MESSAGE",
+				"college": college
 			}
 		}, 
 		{
