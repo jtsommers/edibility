@@ -77,10 +77,11 @@ public class HeaderListView extends RelativeLayout {
         addView(mHeader);
      
         // The list view's scroll bar can be hidden by the header, so we display our own scroll bar instead
-        Drawable scrollBarDrawable = getResources().getDrawable(R.drawable.abc_spinner_ab_holo_light);
+      
+      //  Drawable scrollBarDrawable = getResources().getDrawable(R.drawable.abc_spinner_ab_holo_light);
    
         mScrollView = new FrameLayout(getContext());
-     
+     /*
         LayoutParams scrollParams = new LayoutParams(scrollBarDrawable.getIntrinsicWidth(), LayoutParams.MATCH_PARENT);
         scrollParams.addRule(ALIGN_PARENT_RIGHT);
         scrollParams.rightMargin = (int) dpToPx(2);
@@ -93,8 +94,8 @@ public class HeaderListView extends RelativeLayout {
         mScrollView.addView(scrollIndicator);
 
        
-        addView(mScrollView);
-        
+       // addView(mScrollView);
+       // */
         Log.d ("HeaderListView", "finish init headerlistview");
      
     }

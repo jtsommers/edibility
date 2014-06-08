@@ -6,6 +6,12 @@
     tools:context="edu.ucsc.teambacon.edibility.FoodListActivity"
     tools:ignore="MergeRootFrame" >
     
-      
+     <TextView
+         android:id="@+id/textView1"
+         android:layout_width="204dp"
+         android:layout_height="wrap_content"
+         android:layout_weight="0.30"
+         android:text="Medium Text"
+         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </FrameLayout>

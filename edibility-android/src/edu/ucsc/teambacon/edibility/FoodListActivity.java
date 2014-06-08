@@ -6,6 +6,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -21,7 +23,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -48,11 +49,15 @@ public class FoodListActivity extends ActionBarActivity {
 
 	public String dHall = "&locationNum=";
 	public String dHallCode = null;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		
+		
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -97,7 +102,6 @@ public class FoodListActivity extends ActionBarActivity {
 			@Override
 			public int numberOfSections() {
 				
-			//	if (data != null)  return data.results.food.size();
 				if (data != null) return  foods.size();
 				
 				return 1;
@@ -105,26 +109,7 @@ public class FoodListActivity extends ActionBarActivity {
 
 			@Override
 			public int numberOfRows(int section) {
-				/*
-				if (data != null) {
-					String mealName = data.results.meals.get(section).mealName;
-
-					if (mealName.contains("Lunch")) {
-						int mealLength_1 = data.results.food.get(section).allFood.size();
-						int mealLength_2 = data.results.food.get(section + 1).allFood.size();
-
-						return Math.max(mealLength_1, mealLength_2);
-						
-					} else if (mealName.contains("Dinner")) {
-						int mealLength_1 = data.results.food.get(section).allFood.size();
-						int mealLength_2 = data.results.food.get(section - 1).allFood.size();
-
-						return Math.min(mealLength_1, mealLength_2);
-					}
-
-					else // breakfast	
-						return data.results.food.get(section).allFood.size();
-				}*/
+				
 				if ( data != null)
 					return foods.get(section).allFood.size();
 
@@ -145,34 +130,7 @@ public class FoodListActivity extends ActionBarActivity {
 									android.R.layout.simple_list_item_1), null);
 				}
 				
-				/*
-				
-				String mealName = data.results.meals.get(section).mealName;
-				if (mealName.contains("Lunch")) {
-
-					int mealLength_1 = data.results.food.get(section).allFood.size();
-					int mealLength_2 = data.results.food.get(section + 1).allFood.size();
-
-					if (mealLength_1 > mealLength_2)
-						((TextView) convertView).setText(data.results.food.get(section).allFood.get(row));
-					else
-						((TextView) convertView).setText(data.results.food.get(section + 1).allFood.get(row));
-				}
-
-				else if (mealName.contains("Dinner")) {
-
-					int mealLength_1 = data.results.food.get(section).allFood .size();
-					int mealLength_2 = data.results.food.get(section - 1).allFood.size();
-
-					if (mealLength_1 < mealLength_2)
-						((TextView) convertView).setText(data.results.food.get(section).allFood.get(row));
-					else
-						((TextView) convertView).setText(data.results.food.get(section - 1).allFood.get(row));
-
-				} else // if (mealName.contains("Breakfast") )
-					((TextView) convertView).setText(data.results.food.get(section).allFood.get(row));
- 
- 				*/
+			
 				((TextView) convertView).setText(foods.get(section).allFood.get(row));
 				 
 				
@@ -229,9 +187,7 @@ public class FoodListActivity extends ActionBarActivity {
 					int section, int row, long id) {
 				super.onRowItemClick(parent, view, section, row, id);
 
-				if (section == 0)
-					return;
-
+				
 				//display  dialog
 				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
 			    confirmFood.setFoodName("French Toast");
@@ -259,26 +215,35 @@ public class FoodListActivity extends ActionBarActivity {
 		@Override
 		void execute(String s) {
 			// Sanitize string to remove empty data
-			s = s.replaceAll(
-					",\\n.*\\{\\n.*\\n.*\"allFood\": \"\",\\n.*\\n.*\\}", "");
-			Gson gson = new Gson();
+			
+			if ( s != null){
+				s = s.replaceAll(
+						",\\n.*\\{\\n.*\\n.*\"allFood\": \"\",\\n.*\\n.*\\}",
+						"");
+				Gson gson = new Gson();
 
-			data = null;
-			try {
-				data = gson.fromJson(s, KimonoData.class);
-			} catch (JsonSyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-
-			if (data.lastrunstatus.equalsIgnoreCase("failure")) {
 				data = null;
-			}
-			else
+				try {
+					data = gson.fromJson(s, KimonoData.class);
+				} catch (JsonSyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				if (data.lastrunstatus.equalsIgnoreCase("failure")) {
+					data = null;
+				} 
+				
+				
 				sanitizeData();
 
-			createHeaderListView();
+				createHeaderListView();
+			}
+			else{
+				setContentView(R.layout.activity_food_list);
+				TextView text = (TextView) findViewById(R.id.textView1);
+				text.setText("  No internet connection.");	
+			}		
 		}
 		
 		private void sanitizeData() {
@@ -304,10 +269,10 @@ public class FoodListActivity extends ActionBarActivity {
 					
 					if ( mLength_1 > mLength_2){
 						
-					// This should cover all cases, even weekends have lunch(brunch) and dinner
-					// Last food list references lunch
+						// This should cover all cases, even weekends have lunch(brunch) and dinner
+						// Last food list references lunch
 						lunch = data.results.food.get(numMeals - 1);
-					// Second to last food list references dinner
+						// Second to last food list references dinner
 						dinner = data.results.food.get(numMeals - 2);
 					}
 					else {
@@ -356,6 +321,11 @@ public class FoodListActivity extends ActionBarActivity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		
+	//	if (downloader != null)
+		//downloader.cancel(true);
+		
+	
 		return super.onOptionsItemSelected(item);
 	}
 
