@@ -65,10 +65,14 @@ public class FoodItem {
 	}
 	
 	public String getLocationDisplay() {
-		String ret = "";
+		StringBuilder sb = new StringBuilder();
 		for (String s: locations) {
-			ret += (Utilities.getStringResourceByName(s) + ", ");
+			// Prepend a comma and space unless it's the first element
+			if (sb.length() != 0) {
+				sb.append(", ");
+			}
+			sb.append(Utilities.getStringResourceByName(s));
 		}
-		return ret;
+		return sb.toString();
 	}
 }
