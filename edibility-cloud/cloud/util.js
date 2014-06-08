@@ -6,17 +6,17 @@ exports.channelName = function(locationCode, foodItem) {
 	return channel.replace(/\s/g, "").toLowerCase();
 };
 
-exports.sendPush = function(channel, food, location) {
+exports.sendPush = function(channel, alert) {
 	var alertString = "Food Alert! Check your subscriptions";
-	if (food !== null) {
-		alertString = food + " is available";
+	if (alert !== null) {
+		alertString = alert;
 	}
-	if (location !== null) {
-		alertString += (" at " + location);
-	}
+	// If single element convert to array
+	// Otherwise expected input is an array
+	var c = (typeof(channel) === 'string') ? [channel] : channel;
 	Parse.Push.send(
 		{
-			channels: [ channel ],
+			channels: c,
 			data: {
 				alert: alertString
 			}
