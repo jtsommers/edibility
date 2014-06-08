@@ -38,6 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
             android:name="edu.ucsc.teambacon.edibility.FoodListActivity"
             android:label="@string/title_activity_food_list"
@@ -60,6 +61,12 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+        <!--  Customized Receiver -->
+        <receiver android:name="edu.ucsc.teambacon.edibility.NotificationReceiver" android:exported="false">
+  			<intent-filter>
+   			    <action android:name="edu.ucsc.teambacon.edibility.UPDATE_STATUS" />
+ 		    </intent-filter>
+		</receiver>
         
         <receiver
             android:name="com.parse.GcmBroadcastReceiver"
@@ -72,13 +79,9 @@
             </intent-filter>
         </receiver>
         
-         <!--  Customized Receiver -->
+      
          
-        <receiver android:name="edu.ucsc.teambacon.edibility.AlertReceiver" android:exported="false">
-  			<intent-filter>
-   			    <action android:name="edu.ucsc.teambacon.edibility.UPDATE_STATUS" />
- 		    </intent-filter>
-		</receiver>
+        
     </application>
 
 </manifest>
