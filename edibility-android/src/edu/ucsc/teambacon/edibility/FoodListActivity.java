@@ -206,6 +206,8 @@ public class FoodListActivity extends ActionBarActivity {
 	 * 
 	 * }
 	 */
+	
+	
 
 	private class ChoiceCompletion extends BDCompletionTask {
 
@@ -318,10 +320,7 @@ public class FoodListActivity extends ActionBarActivity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
-		
-	//	if (downloader != null)
-		//downloader.cancel(true);
-		
+	
 	
 		return super.onOptionsItemSelected(item);
 	}
