@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -74,17 +76,19 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
         // This is the array adapter, it takes the context of the activity as a 
         // first parameter, the type of list view as a second parameter and your 
         // array as a third parameter.
-        AlertsListAdapter adapter = new AlertsListAdapter(this, R.layout.alert_list_element, foodList);
+        final AlertsListAdapter adapter = new AlertsListAdapter(this, R.layout.alert_list_element, foodList);
 
         lv.setAdapter(adapter); 	
         
-//        lv.setOnItemClickListener(new OnItemClickListener() {
-//        	@Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { 
-//        		
-//        	}
-//        }
-//	);
+        lv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
+			    confirmFood.setFoodName(adapter.getItem(arg2).getName());
+			    confirmFood.show(getSupportFragmentManager(), "confirm food");
+			}
+        }
+	);
 	
 	
 	//end of onResume()

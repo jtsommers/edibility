@@ -48,7 +48,7 @@ public class FoodItem {
 	public String getLocationDisplay() {
 		String ret = "";
 		for (String s: locations) {
-			ret += (Utilities.getStringResourceByName(s) + " ");
+			ret += (Utilities.getStringResourceByName(s) + ", ");
 		}
 		return ret;
 	}
