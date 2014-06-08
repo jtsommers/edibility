@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:minHeight="50dp"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/alertListItemText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@android:string/ok"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="@dimen/alert_food_display" />
+
+    <TextView
+        android:id="@+id/alertListDetailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/alertListItemText"
+        android:text="@android:string/untitled"
+        android:textSize="@dimen/alert_college_detail"
+        android:textStyle="italic" />
+
+</RelativeLayout>

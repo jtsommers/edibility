@@ -1,25 +1,30 @@
 package edu.ucsc.teambacon.edibility;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.os.Build;
 
 public class SubscribedAlertsActivity extends ActionBarActivity {
 
 	
-    private ListView lv;	
+    private ListView lv;
+    private static final String LOG_TAG = "SubscribedAlerts";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +74,9 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
         // This is the array adapter, it takes the context of the activity as a 
         // first parameter, the type of list view as a second parameter and your 
         // array as a third parameter.
-        ArrayAdapter<String> arrayAdapter = 
-        		new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foodNameList );
+        AlertsListAdapter adapter = new AlertsListAdapter(this, R.layout.alert_list_element, foodList);
 
-        lv.setAdapter(arrayAdapter); 	
+        lv.setAdapter(adapter); 	
         
 //        lv.setOnItemClickListener(new OnItemClickListener() {
 //        	@Override
@@ -100,6 +104,46 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
 					R.layout.fragment_subscribed_alerts, container, false);
 			return rootView;
 		}
+	}
+	
+	// Custom adapter
+	private class AlertsListAdapter extends ArrayAdapter<FoodItem>{
+
+		int resource;
+		@SuppressWarnings("unused")
+		Context context;
+		
+		public AlertsListAdapter(Context _context, int _resource, List<FoodItem> items) {
+			super(_context, _resource, items);
+			resource = _resource;
+			context = _context;
+			this.context = _context;
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LinearLayout newView;
+			
+			FoodItem item = getItem(position);
+			
+			// Inflate a new view if necessary.
+			if (convertView == null) {
+				newView = new LinearLayout(getContext());
+				String inflater = Context.LAYOUT_INFLATER_SERVICE;
+				LayoutInflater vi = (LayoutInflater) getContext().getSystemService(inflater);
+				vi.inflate(resource,  newView, true);
+			} else {
+				newView = (LinearLayout) convertView;
+			}
+			
+			// Fills in the view.
+			TextView tv = (TextView) newView.findViewById(R.id.alertListItemText);
+			tv.setText(item.displayName);
+			TextView detail = (TextView) newView.findViewById(R.id.alertListDetailText);
+			detail.setText(item.getLocationDisplay());
+
+			return newView;
+		}		
 	}
 
 }
