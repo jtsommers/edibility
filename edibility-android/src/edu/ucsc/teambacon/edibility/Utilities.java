@@ -3,6 +3,8 @@ package edu.ucsc.teambacon.edibility;
 import java.util.HashMap;
 import java.util.Locale;
 
+import android.content.Context;
+
 public class Utilities {
 	
 	private static HashMap<String, String> diningHalls;
@@ -39,5 +41,13 @@ public class Utilities {
 		return diningHalls.get(dhall);
 	}
 
-
+	// Function to get a string resource R.id."aString" by passing "aString"
+	// http://stackoverflow.com/a/11595723
+	public static String getStringResourceByName(String aString) {
+		Context c = EdibilityApplication.getContext();
+		String packageName = c.getPackageName();
+		int resId = c.getResources()
+				.getIdentifier(aString, "string", packageName);
+		return c.getString(resId);
+	}
 }
