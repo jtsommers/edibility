@@ -17,5 +17,8 @@ public class EdibilityApplication extends Application {
 		// Set default activity to handle push notifications
 		PushService.setDefaultPushCallback(this, LocationSelectionActivity.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
+		
+		// Initialize shared prefs with application context
+		SavedPreferences.getInstance(getApplicationContext());
 	}
 }
