@@ -33,21 +33,32 @@ public class NotificationReceiver extends BroadcastReceiver {
 	            String action = intent.getAction();
 	            String channel = intent.getExtras().getString( PARSE_JSON_CHANNEL_KEY );
 	            JSONObject json = new JSONObject(intent.getExtras().getString(PARSE_DATA_KEY ));
-	            String title = "New alert!";
-	            if (json.has("header"))
-	                title = json.getString("header");
-	            generateNotification(context,  title);
+	         
+	            // receives ---> data { header: "Test Notification Received"}
+	            // channel  --->user's id (ex. here_is_a_ghost)
+	            
+	            // if (json.has("header"))
+	            // variable = json.getString("header");  ---> "Test Notification Received"
+	        
+	            // message is the content of notification
+	            
+	           
+	            String message = "French toast v.s. Bacon"; 
+	            
+	            // Calls a function to define the notification ( rington, icon, content);
+	            defineNotification(context,  message);
 	        } catch (Exception e) {
 	            Log.d(LOG_TAG, "JSONException: " + e.getMessage());
 	        }
 
 	}
 	 
-	 public static void generateNotification(Context context,  String message) {
+	 public static void defineNotification(Context context,  String message) {
 	        // Show the notification
 	        long when = System.currentTimeMillis();
 	        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 	       // Notification notification = new Notification(icon, message, when);
+	        
 	        
 	        Notification notification = new Notification(R.drawable.ic_launcher, message,when);
 	        
