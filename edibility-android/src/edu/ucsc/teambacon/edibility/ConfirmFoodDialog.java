@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 
 public class ConfirmFoodDialog extends DialogFragment {
 	
@@ -16,6 +17,7 @@ public class ConfirmFoodDialog extends DialogFragment {
 	
 	String foodName = "";
 	boolean alreadySaved;
+	private static final String LOG_TAG = "ConfirmFoodDialog";
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -102,8 +104,12 @@ public class ConfirmFoodDialog extends DialogFragment {
 	            		   SavedPreferences.getInstance().addFood(food);
 	            	   if(food.getLocations().isEmpty() && alreadySaved)
 	            		   SavedPreferences.getInstance().removeFood(food);
-	            	   ConfirmFoodDialogListener activity = (ConfirmFoodDialogListener) getActivity();
-	                   activity.onFinishFoodDialog();
+	            	   try {
+		            	   ConfirmFoodDialogListener activity = (ConfirmFoodDialogListener) getActivity();
+		                   activity.onFinishFoodDialog();
+	            	   } catch (ClassCastException e) {
+	            		   Log.i(LOG_TAG, "Class cast failed, this is only an error if in SubscribedAlertsActivity");
+	            	   }
 	               }
 	           })
 	           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
