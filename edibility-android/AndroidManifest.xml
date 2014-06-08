@@ -65,7 +65,7 @@
         <receiver android:name="edu.ucsc.teambacon.edibility.NotificationReceiver" 
             
             android:exported="false"
-            android:enabled="true">
+           >
   			<intent-filter>
    			    <action android:name="edu.ucsc.teambacon.edibility.MESSAGE" />
  		    </intent-filter>

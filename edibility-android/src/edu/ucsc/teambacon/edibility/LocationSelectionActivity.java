@@ -29,23 +29,10 @@ public class LocationSelectionActivity extends ActionBarActivity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-		   // Initialize Parse (Push Notifications)
-        Parse.initialize(this, "ltuDyC6qDfdL7QLia9LIBF78VFKUPFmgluC6sftx", "VVG8Xk6L3j6kZ7jsuaWSJL1GYIk69tdSrmPZwSnv");
-        // Set default activity to handle push notifications
-        PushService.setDefaultPushCallback(this, LocationSelectionActivity.class);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-        // TODO: Remove this test subscription
-      //  PushService.unsubscribe(getApplicationContext(), "testchannel");
-
-
-
 		
-		 ParseAnalytics.trackAppOpened(getIntent());
-		// ParseAnalytics.
-		Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
-
+		//Parse says put it in onCreate whil notification works without the following code,
+		ParseAnalytics.trackAppOpened(getIntent());
 	
-		//PushService.
 	}
 
 	@Override

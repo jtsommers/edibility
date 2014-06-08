@@ -13,29 +13,29 @@ import android.widget.Toast;
 
 public class NotificationReceiver extends BroadcastReceiver {
 	
-	private static final String TAG = "AlertReceiver";
+	
+	public static final String PARSE_DATA_KEY         =   "com.parse.Data";
+	public static final String PARSE_JSON_CHANNEL_KEY       =   "com.parse.Channel";
 
-
+	
+	 // Receive notification. It does not think but gives out a toast at this point
+	 //TODO need to add codes to push notification for users.
 	 @Override
-	  public void onReceive(Context context, Intent intent) {
-		 Toast.makeText(context, "Push received!",Toast.LENGTH_LONG).show();
-	    try {
+	 public void onReceive(Context context, Intent intent) {
+		 
+		 Toast.makeText(context, "Push received!",Toast.LENGTH_SHORT).show();
 	      String action = intent.getAction();
-	      String channel = intent.getExtras().getString("com.parse.Channel");
-	      JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
-	 
-	      Log.d(TAG, "got action " + action + " on channel " + channel + " with:");
-	      Iterator itr = json.keys();
-	      while (itr.hasNext()) {
-	        String key = (String) itr.next();
-	        Log.d(TAG, "..." + key + " => " + json.getString(key));
-	      }
-	    } catch (JSONException e) {
-	      Log.d(TAG, "JSONException: " + e.getMessage());
-	    }
-	  }
+	         String channel = intent.getExtras().getString(PARSE_JSON_CHANNEL_KEY);
+	         try {
+				JSONObject json = new JSONObject(intent.getExtras().getString(PARSE_DATA_KEY));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
+	     }
 
+	 	
 	
 
 	}
