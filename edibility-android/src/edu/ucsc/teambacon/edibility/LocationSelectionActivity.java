@@ -16,7 +16,6 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
-import edu.ucsc.teambacon.edibility.NotificationReceiver;
 
 public class LocationSelectionActivity extends ActionBarActivity {
 
@@ -30,7 +29,22 @@ public class LocationSelectionActivity extends ActionBarActivity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-		ParseAnalytics.trackAppOpened(getIntent());
+		   // Initialize Parse (Push Notifications)
+        Parse.initialize(this, "ltuDyC6qDfdL7QLia9LIBF78VFKUPFmgluC6sftx", "VVG8Xk6L3j6kZ7jsuaWSJL1GYIk69tdSrmPZwSnv");
+        // Set default activity to handle push notifications
+        PushService.setDefaultPushCallback(this, LocationSelectionActivity.class);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+        // TODO: Remove this test subscription
+      //  PushService.unsubscribe(getApplicationContext(), "testchannel");
+
+
+
+		
+		 ParseAnalytics.trackAppOpened(getIntent());
+		// ParseAnalytics.
+		Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
+
+	
 		//PushService.
 	}
 
