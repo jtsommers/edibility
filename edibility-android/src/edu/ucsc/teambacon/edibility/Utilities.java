@@ -11,15 +11,12 @@ public class Utilities {
 	
 	static public String parseString(String dhall, String food){
 		//make food lowercase and remove spaces
-		food.toLowerCase(Locale.US);
-		food.replaceAll(" ", "");
-		food.replaceAll("[,.'\";:?!/&@#$%^*()]", "");
+		food = food.toLowerCase(Locale.US);
+		food = food.replaceAll("[\\s,.'\";:?!/\\&@#$%^*()]", "");
 		
 		//create output string that follows "foodalert_dininghallcode_nameOfFood"
 		String out = "foodalert_";
-		out.concat(getLocationCode(dhall));
-		out.concat("_");
-		out.concat(food);
+		out = out + getLocationCode(dhall) + "_" + food;
 		
 		return out;
 	}
