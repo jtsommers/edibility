@@ -10,7 +10,8 @@ Parse.Cloud.define("testpush", function(request, response) {
 		{
 			channels: [ "here_is_a_ghost" ],
 			data: {
-				header: "Test Notification Received"
+				header: "Test Notification Received",
+				action: "edu.ucsc.teambacon.edibility.MESSAGE"
 			}
 		}, 
 		{
@@ -31,7 +32,8 @@ Parse.Cloud.job("testjob", function(request, response) {
 		{
 			channels: [ "here_is_a_ghost" ],
 			data: {
-				header: "Test Notification Received"
+				header: "Test Notification Received",
+				action: "edu.ucsc.teambacon.edibility.MESSAGE"
 			}
 		}, 
 		{

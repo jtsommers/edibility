@@ -16,10 +16,6 @@ public class ConfirmFoodDialog extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		
-		// Where we track the selected items
-		final ArrayList<Integer> selectedDHalls = new ArrayList<Integer>();
-		
-		
 		alreadySaved = false;
 	    final FoodItem food;
 	    FoodItem temp = null;
@@ -43,9 +39,7 @@ public class ConfirmFoodDialog extends DialogFragment {
 		else
 		{
 			food = temp;
-		}
-
-		
+		}		
 
 	    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	    // Set the dialog title
@@ -62,8 +56,7 @@ public class ConfirmFoodDialog extends DialogFragment {
 
 	            	   if (isChecked) {
 	                       // If the user checked the item, add it to the selected items
-	                       selectedDHalls.add(which);
-	                       switch(which){
+	                       	switch(which){
 	                    	   case 0: food.addLocation("porter");
 	                    		   break;
 	                    	   case 1: food.addLocation("eight");
@@ -76,10 +69,10 @@ public class ConfirmFoodDialog extends DialogFragment {
 	                    		   break;
 	                       }
 	                       
-	                   } else if (selectedDHalls.contains(which)) {
+	                   } else {
 	                       // Else, if the item is already in the array, remove it 
-	                       selectedDHalls.remove(Integer.valueOf(which));
-	                       switch(which){
+	                       
+	                	switch(which){
                     	   case 0: food.removeLocation("porter");
                     		   break;
                     	   case 1: food.removeLocation("eight");
@@ -103,6 +96,9 @@ public class ConfirmFoodDialog extends DialogFragment {
 	            	   
 	            	   if(!food.getLocations().isEmpty() && !alreadySaved)
 	            		   SavedPreferences.getInstance().addFood(food);
+	            	   if(food.getLocations().isEmpty() && alreadySaved)
+	            		   SavedPreferences.getInstance().removeFood(food);
+	            	   
 	               }
 	           })
 	           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
