@@ -187,9 +187,9 @@ public class FoodListActivity extends ActionBarActivity {
 				
 				//display  dialog
 				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
-			    confirmFood.setFoodName("French Toast");
+			    confirmFood.setFoodName((String)getRowItem(section, row));
 			    confirmFood.show(getSupportFragmentManager(), "confirm food");
-			
+			    
 				// Toast.makeText(FoodListActivity.this, "Section " + section +
 				// " Row " + row, Toast.LENGTH_SHORT).show();
 			}
