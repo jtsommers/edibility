@@ -1,5 +1,7 @@
 package edu.ucsc.teambacon.edibility;
 
+import java.util.ArrayList;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -9,10 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.os.Build;
 
 public class SubscribedAlertsActivity extends ActionBarActivity {
 
+	
+    private ListView lv;	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,6 +29,7 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
 	}
 
 	@Override
@@ -42,6 +50,29 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+        ListView lv = (ListView) findViewById(R.id.listView1);
+        
+        ArrayList<FoodItem> foodList = SavedPreferences.getInstance().getSavedFoodList();
+        
+        ArrayList<String> foodNameList = new ArrayList<String>();
+        for(FoodItem food:foodList)
+        {
+        	foodNameList.add(food.name);
+        }
+
+        // This is the array adapter, it takes the context of the activity as a 
+        // first parameter, the type of list view as a second parameter and your 
+        // array as a third parameter.
+        ArrayAdapter<String> arrayAdapter = 
+        		new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foodNameList );
+
+        lv.setAdapter(arrayAdapter); 	
+
 	}
 
 	/**
