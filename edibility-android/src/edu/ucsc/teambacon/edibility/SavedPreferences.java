@@ -35,4 +35,5 @@ public class SavedPreferences {
 		int i = instance.savedFood.lastIndexOf(f);
 		return instance.savedFood.get(i);
 	}
+	
 }

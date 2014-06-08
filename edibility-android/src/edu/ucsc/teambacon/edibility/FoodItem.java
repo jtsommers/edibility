@@ -1,24 +1,36 @@
 package edu.ucsc.teambacon.edibility;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class FoodItem {
 
-	String name = "";
+	String displayName = "";
+	String channelName = "";
 	ArrayList<String> locations;
 	
 	public FoodItem(String name){
-		this.name = name;
+		this.displayName = name;
+
+		this.channelName = name;
+		this.channelName.toLowerCase(Locale.US);
+		this.channelName.replaceAll(" ", "");
+		this.channelName.replaceAll("[,.'\";:?!/&@#$%^*()]", "");
+		
 		this.locations = new ArrayList<String>();
 	}
 
 	public FoodItem(String name, ArrayList<String> locations){
-		this.name = name;
+		this.displayName = name;
 		this.locations = locations;
 	}
 	
 	public String getName(){
-		return this.name;
+		return this.displayName;
+	}
+	
+	public String getChannelName(){
+		return this.channelName;
 	}
 	
 	public ArrayList<String> getLocations(){

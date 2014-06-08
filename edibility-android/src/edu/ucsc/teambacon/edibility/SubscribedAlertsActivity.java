@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.os.Build;
@@ -57,12 +58,12 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
 		super.onResume();
         ListView lv = (ListView) findViewById(R.id.listView1);
         
-        ArrayList<FoodItem> foodList = SavedPreferences.getInstance().getSavedFoodList();
-        
+        ArrayList<FoodItem>foodList = SavedPreferences.getInstance().getSavedFoodList();
         ArrayList<String> foodNameList = new ArrayList<String>();
+        
         for(FoodItem food:foodList)
         {
-        	foodNameList.add(food.name);
+        	foodNameList.add(food.displayName);
         }
 
         // This is the array adapter, it takes the context of the activity as a 
@@ -72,9 +73,18 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
         		new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, foodNameList );
 
         lv.setAdapter(arrayAdapter); 	
-
+        
+//        lv.setOnItemClickListener(new OnItemClickListener() {
+//        	@Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { 
+//        		
+//        	}
+//        }
+//	);
+	
+	
+	//end of onResume()
 	}
-
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
