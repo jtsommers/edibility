@@ -112,7 +112,9 @@ public class FoodListActivity extends ActionBarActivity {
 			}
 
 			@Override
-			public Object getRowItem(int section, int row) { return null; }
+			public Object getRowItem(int section, int row) { 
+				return foods.get(section).foodAtIndex(row);
+			}
 
 			@Override
 			public boolean hasSectionHeaderView(int section) { return true; }
