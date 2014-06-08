@@ -20,6 +20,9 @@
         android:name="edu.ucsc.teambacon.edibility.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     <uses-permission android:name="edu.ucsc.teambacon.edibility.permission.C2D_MESSAGE" />
+    
+    <!-- Portait mode see: http://stackoverflow.com/a/15718892 -->
+    <uses-feature android:name="android.hardware.screen.portrait" />
 
     <application
         android:name="edu.ucsc.teambacon.edibility.EdibilityApplication"
@@ -31,6 +34,7 @@
         
         <activity
             android:name="edu.ucsc.teambacon.edibility.LocationSelectionActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <!-- Intent Filter is what defines the main activity -->
             <intent-filter>
@@ -41,6 +45,7 @@
         
         <activity
             android:name="edu.ucsc.teambacon.edibility.FoodListActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_food_list"
             android:parentActivityName="edu.ucsc.teambacon.edibility.LocationSelectionActivity" >
             <meta-data
@@ -49,6 +54,7 @@
         </activity>
         <activity
             android:name="edu.ucsc.teambacon.edibility.SubscribedAlertsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_subscribed_alerts" >
         </activity>
         
