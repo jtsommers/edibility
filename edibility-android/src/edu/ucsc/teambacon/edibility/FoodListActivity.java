@@ -1,35 +1,27 @@
 package edu.ucsc.teambacon.edibility;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import edu.ucsc.teambacon.edibility.deserialization.*;
-import edu.ucsc.teambacon.edibility.headerlistview_source.*;
+import edu.ucsc.teambacon.edibility.deserialization.KimonoData;
+import edu.ucsc.teambacon.edibility.deserialization.MealFoodList;
+import edu.ucsc.teambacon.edibility.deserialization.MealType;
+import edu.ucsc.teambacon.edibility.headerlistview_source.HeaderListView;
+import edu.ucsc.teambacon.edibility.headerlistview_source.SectionAdapter;
 
 public class FoodListActivity extends ActionBarActivity {
 
@@ -49,6 +41,8 @@ public class FoodListActivity extends ActionBarActivity {
 
 	public String dHall = "&locationNum=";
 	public String dHallCode = null;
+	
+	private ProgressDialog progressDialog;
 	
 	
 
@@ -71,6 +65,11 @@ public class FoodListActivity extends ActionBarActivity {
 
 		if (downloader == null
 				|| downloader.getStatus() == BackgroundDownloader.Status.FINISHED) {
+            // Show the progress dialog
+            progressDialog = ProgressDialog.show(FoodListActivity.this,"Loading...",  
+            	    "Loading application View, please wait...", false, false);
+            
+            // Start the background downloader
 			downloader = new BackgroundDownloader(new ChoiceCompletion());
 			downloader.execute(FoodListActivity.DOWNLOAD_URL + dHall);
 
@@ -204,6 +203,8 @@ public class FoodListActivity extends ActionBarActivity {
 
 		@Override
 		void execute(String s) {
+			progressDialog.dismiss();
+			
 			// Sanitize string to remove empty data
 			
 			if ( s != null){
