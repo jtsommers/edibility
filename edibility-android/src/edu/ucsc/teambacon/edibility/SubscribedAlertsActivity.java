@@ -3,6 +3,7 @@ package edu.ucsc.teambacon.edibility;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ucsc.teambacon.edibility.ConfirmFoodDialog.ConfirmFoodDialogListener;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -22,11 +23,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.os.Build;
 
-public class SubscribedAlertsActivity extends ActionBarActivity {
+public class SubscribedAlertsActivity extends ActionBarActivity implements ConfirmFoodDialogListener {
 
-	
-    private ListView lv;
     private static final String LOG_TAG = "SubscribedAlerts";
+    AlertsListAdapter adapter;
+    private ArrayList<FoodItem> foodList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,18 +66,12 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
 		super.onResume();
         ListView lv = (ListView) findViewById(R.id.listView1);
         
-        ArrayList<FoodItem>foodList = SavedPreferences.getInstance().getSavedFoodList();
-        ArrayList<String> foodNameList = new ArrayList<String>();
-        
-        for(FoodItem food:foodList)
-        {
-        	foodNameList.add(food.displayName);
-        }
+        foodList = SavedPreferences.getInstance().getSavedFoodList();
 
         // This is the array adapter, it takes the context of the activity as a 
         // first parameter, the type of list view as a second parameter and your 
         // array as a third parameter.
-        final AlertsListAdapter adapter = new AlertsListAdapter(this, R.layout.alert_list_element, foodList);
+        adapter = new AlertsListAdapter(this, R.layout.alert_list_element, foodList);
 
         lv.setAdapter(adapter); 	
         
@@ -148,6 +143,12 @@ public class SubscribedAlertsActivity extends ActionBarActivity {
 
 			return newView;
 		}		
+	}
+
+	@Override
+	public void onFinishFoodDialog() {
+		foodList = SavedPreferences.getInstance().getSavedFoodList();
+		adapter.notifyDataSetChanged();
 	}
 
 }

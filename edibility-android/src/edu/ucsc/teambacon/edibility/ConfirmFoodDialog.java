@@ -10,6 +10,10 @@ import android.support.v4.app.DialogFragment;
 
 public class ConfirmFoodDialog extends DialogFragment {
 	
+	public interface ConfirmFoodDialogListener {
+		void onFinishFoodDialog();
+	}
+	
 	String foodName = "";
 	boolean alreadySaved;
 	
@@ -98,7 +102,8 @@ public class ConfirmFoodDialog extends DialogFragment {
 	            		   SavedPreferences.getInstance().addFood(food);
 	            	   if(food.getLocations().isEmpty() && alreadySaved)
 	            		   SavedPreferences.getInstance().removeFood(food);
-	            	   
+	            	   ConfirmFoodDialogListener activity = (ConfirmFoodDialogListener) getActivity();
+	                   activity.onFinishFoodDialog();
 	               }
 	           })
 	           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
