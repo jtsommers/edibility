@@ -8,9 +8,9 @@ Parse.Cloud.define("hello", function(request, response) {
 Parse.Cloud.define("testpush", function(request, response) {
 	Parse.Push.send(
 		{
-			channels: [ "testchannel" ],
+			channels: [ "here_is_a_ghost" ],
 			data: {
-				alert: "Test Notification Received"
+				header: "Test Notification Received"
 			}
 		}, 
 		{
@@ -29,9 +29,9 @@ Parse.Cloud.define("testpush", function(request, response) {
 Parse.Cloud.job("testjob", function(request, response) {
 	Parse.Push.send(
 		{
-			channels: [ "testchannel" ],
+			channels: [ "here_is_a_ghost" ],
 			data: {
-				alert: "Test Notification Received"
+				header: "Test Notification Received"
 			}
 		}, 
 		{

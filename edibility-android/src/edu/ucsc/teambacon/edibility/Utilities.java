@@ -13,7 +13,7 @@ public class Utilities {
 		food.replaceAll(" ", "");
 		food.replaceAll("[,.'\";:?!/&@#$%^*()]", "");
 		
-		//create output string that follows "foodalert_dininghallcode_nameoffood"
+		//create output string that follows "foodalert_dininghallcode_nameOfFood"
 		String out = "foodalert_";
 		out.concat(getLocationCode(dhall));
 		out.concat("_");
