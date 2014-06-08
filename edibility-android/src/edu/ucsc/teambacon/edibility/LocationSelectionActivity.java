@@ -16,7 +16,6 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
-import edu.ucsc.teambacon.edibility.NotificationReceiver;
 
 public class LocationSelectionActivity extends ActionBarActivity {
 
@@ -30,8 +29,10 @@ public class LocationSelectionActivity extends ActionBarActivity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
+		
+		//Parse says put it in onCreate whil notification works without the following code,
 		ParseAnalytics.trackAppOpened(getIntent());
-		//PushService.
+	
 	}
 
 	@Override

@@ -62,9 +62,12 @@
             </intent-filter>
         </receiver>
         <!--  Customized Receiver -->
-        <receiver android:name="edu.ucsc.teambacon.edibility.NotificationReceiver" android:exported="false">
+        <receiver android:name="edu.ucsc.teambacon.edibility.NotificationReceiver" 
+            
+            android:exported="false"
+           >
   			<intent-filter>
-   			    <action android:name="edu.ucsc.teambacon.edibility.UPDATE_STATUS" />
+   			    <action android:name="edu.ucsc.teambacon.edibility.MESSAGE" />
  		    </intent-filter>
 		</receiver>
         
