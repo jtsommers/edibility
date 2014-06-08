@@ -19,9 +19,8 @@ public class FoodItem {
 		this.displayName = name;
 
 		this.channelName = name;
-		this.channelName.toLowerCase(Locale.US);
-		this.channelName.replaceAll(" ", "");
-		this.channelName.replaceAll("[,.'\";:?!/&@#$%^*()]", "");
+		this.channelName = this.channelName.toLowerCase(Locale.US);
+		this.channelName = this.channelName.replaceAll("[\\s,.'\";:?!/\\&@#$%^*()]", "");
 		
 		this.locations = new ArrayList<String>();
 	}
