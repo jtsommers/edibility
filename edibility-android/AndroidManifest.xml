@@ -72,11 +72,11 @@
             </intent-filter>
         </receiver>
         
-         <!--  Parse API for Push Notifications -->
+         <!--  Customized Receiver -->
          
         <receiver android:name="edu.ucsc.teambacon.edibility.AlertReceiver" android:exported="false">
   			<intent-filter>
-   			    <action android:name="edu.ucsc.teambacon.edibility.AlertReceiver" />
+   			    <action android:name="edu.ucsc.teambacon.edibility.UPDATE_STATUS" />
  		    </intent-filter>
 		</receiver>
     </application>
