@@ -38,6 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
             android:name="edu.ucsc.teambacon.edibility.FoodListActivity"
             android:label="@string/title_activity_food_list"
@@ -50,6 +51,7 @@
             android:name="edu.ucsc.teambacon.edibility.SubscribedAlertsActivity"
             android:label="@string/title_activity_subscribed_alerts" >
         </activity>
+        
         <!-- Parse API for Push Notifications -->
         <service android:name="com.parse.PushService" />
 
@@ -59,6 +61,13 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+        <!--  Customized Receiver -->
+        <receiver android:name="edu.ucsc.teambacon.edibility.NotificationReceiver" android:exported="false">
+  			<intent-filter>
+   			    <action android:name="edu.ucsc.teambacon.edibility.UPDATE_STATUS" />
+ 		    </intent-filter>
+		</receiver>
+        
         <receiver
             android:name="com.parse.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -69,6 +78,10 @@
                 <category android:name="edu.ucsc.teambacon.edibility" />
             </intent-filter>
         </receiver>
+        
+      
+         
+        
     </application>
 
 </manifest>

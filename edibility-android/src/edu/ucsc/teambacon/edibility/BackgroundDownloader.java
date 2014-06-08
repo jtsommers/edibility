@@ -65,7 +65,7 @@ public class BackgroundDownloader extends AsyncTask<String, String, String> {
 					}
 					if (iStream != null) {
 						downloadedString = ConvertStreamToString(iStream);
-						Log.d(LOG_TAG, "Received string: " + downloadedString);
+					//	Log.d(LOG_TAG, "Received string: " + downloadedString);
 						return downloadedString;
 					}
 				}

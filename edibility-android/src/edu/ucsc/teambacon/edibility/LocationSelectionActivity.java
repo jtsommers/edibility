@@ -16,6 +16,8 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
+import edu.ucsc.teambacon.edibility.NotificationReceiver;
+
 public class LocationSelectionActivity extends ActionBarActivity {
 
 	@Override
@@ -27,6 +29,9 @@ public class LocationSelectionActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		ParseAnalytics.trackAppOpened(getIntent());
+		//PushService.
 	}
 
 	@Override
