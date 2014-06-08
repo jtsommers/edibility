@@ -11,6 +11,7 @@ public class Utilities {
 		//make food lowercase and remove spaces
 		food.toLowerCase(Locale.US);
 		food.replaceAll(" ", "");
+		food.replaceAll("[,.'\";:?!/&@#$%^*()]", "");
 		
 		//create output string that follows "foodalert_dininghallcode_nameoffood"
 		String out = "foodalert_";
