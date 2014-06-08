@@ -21,58 +21,40 @@ import android.widget.Toast;
 public class NotificationReceiver extends BroadcastReceiver {
 	
 	
-	public ArrayList<FoodItem> foodlist; 
 	public static final String LOG_TAG = "NotificationReceiver";
 	public static final String PARSE_DATA_KEY         =   "com.parse.Data";
 	public static final String PARSE_JSON_CHANNEL_KEY       =   "com.parse.Channel";
 	
-	
-	 // Receive notification. It does not think but gives out a toast at this point
-	 //TODO need to add codes to push notification for users.
 	 @Override
 	 public void onReceive(Context context, Intent intent) {
 		 
-		 foodlist = SavedPreferences.getInstance().getSavedFoodList();
-		 
-		 Log.i ("notify", "---the first item in save " + foodlist.get(0).displayName);
-		 // display -- show in alert
-		 // channel -- for searching from String channel notification
+
+	     ArrayList<FoodItem> foodlist = SavedPreferences.getInstance().getSavedFoodList();
 		 FoodItem foodItem;
 		 String saved = "";
 		 
-		 Toast.makeText(context, "Push received!",Toast.LENGTH_SHORT).show();
+		//Toast.makeText(context, "Push received!",Toast.LENGTH_SHORT).show();
 		 try {
 	            String action = intent.getAction();
 	            String channel = intent.getExtras().getString( PARSE_JSON_CHANNEL_KEY );
 	            
-	        // for loop for the food list to channel.indexof
 	            for (int i = 0; i < foodlist.size(); i ++){
 	            	foodItem = foodlist.get(i);
 	            	
 	            	if (channel.indexOf(foodItem.channelName) != -1)	{
 	            		saved = foodItem.displayName;
-	            		Log.d("notify", " inside if " + saved);
 	            	}
 	            }
 	           
 	            JSONObject json = new JSONObject(intent.getExtras().getString(PARSE_DATA_KEY ));
-	         
-	            // receives ---> data { header: "Test Notification Received"}
-	            
-	            // channel  --->user's id (ex. here_is_a_ghost)
-	            
-	            // if (json.has("header"))
-	          //  if ( saved != null)
-	            String var = json.getString("header"); // ---> "Test Notification Received"
 	        
-	            // message is the content of notification
+	           // String var = json.getString("header"); 
+	            String college =  Utilities.getStringResourceByName(json.getString("college"));
+	          
+	            //TODO : a better message maybe
+	            String message = college + " now has " + saved;
 	            
-	            Log.d ("notify", " --- what we received " + channel  + " -- \n" + var);
-	            
-	           
-	            String message = saved;
-	            
-	            // Calls a function to define the notification ( rington, icon, content);
+	            // Calls a function to define the notification ( rington,content);
 	            defineNotification(context,  message);
 	        } catch (Exception e) {
 	            Log.d(LOG_TAG, "JSONException: " + e.getMessage());
@@ -84,13 +66,12 @@ public class NotificationReceiver extends BroadcastReceiver {
 	        // Show the notification
 	        long when = System.currentTimeMillis();
 	        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-	       // Notification notification = new Notification(icon, message, when);
 	        
-	        
+	        //TODO - change square-shape launching icon
 	        Notification notification = new Notification(R.drawable.ic_launcher, message,when);
-	        
-	        
+	       
 	        String title = context.getString(R.string.app_name);
+	        
 	        Intent notificationIntent = new Intent(context, NotificationReceiver.class);
 
 	        // set intent so it does not start a new activity
