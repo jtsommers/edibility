@@ -7,6 +7,8 @@ var DINING_HALLS = {
 	"porter"	: "25"
 };
 
+var DEBUG = true;
+
 // API URL
 var KIMONO_URL = "http://www.kimonolabs.com/api/6guup5y4";
 // API KEY
@@ -175,6 +177,9 @@ Menu.prototype.onDownloadSuccess = function() {
 };
 
 Menu.prototype.sanitizeData = function(data) {
+	if (DEBUG) {
+		console.log("Sanitizing data at " + this.college);
+	}
 	// Confirm existence of meal names
 	if (data.meals && data.meals.length > 0) {
 		this.meals = [];
@@ -243,7 +248,7 @@ Menu.prototype.notifyForMeal = function(mealName) {
 		var food = foods[i];
 		var channel = Util.channelName(this.location, food);
 		var alert = food + " available at " + this.college;
-		Util.sendPush(channel, alert);
+		Util.sendPush(channel, alert, this.college);
 	}
 };
 
@@ -253,6 +258,10 @@ Menu.prototype.notifyForMealGroup = function(mealName) {
 		return;
 	}
 	var Util = require('cloud/util.js');
+	if (!this.meals) {
+		// What went wrong?
+		console.error("Wait, what? " + this.college);
+	}
 	// Search for meal we'd like to send notifications for
 	var mealIndex = -1;
 	for (var i = 0; i < this.meals.length; i++) {
@@ -276,7 +285,7 @@ Menu.prototype.notifyForMealGroup = function(mealName) {
 	}
 	// Send push to all channels
 	var alert = mealName.substr(0, 1).toUpperCase() + mealName.substr(1) + " food subscription available at " + this.college;
-	Util.sendPush(channels, alert);
+	Util.sendPush(channels, alert, this.college);
 };
 
 Menu.prototype.success = function() {

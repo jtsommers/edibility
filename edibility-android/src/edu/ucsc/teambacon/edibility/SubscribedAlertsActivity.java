@@ -7,7 +7,9 @@ import edu.ucsc.teambacon.edibility.ConfirmFoodDialog.ConfirmFoodDialogListener;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,24 +69,42 @@ public class SubscribedAlertsActivity extends ActionBarActivity implements Confi
         ListView lv = (ListView) findViewById(R.id.listView1);
         
         foodList = SavedPreferences.getInstance().getSavedFoodList();
-
-        // This is the array adapter, it takes the context of the activity as a 
-        // first parameter, the type of list view as a second parameter and your 
-        // array as a third parameter.
-        adapter = new AlertsListAdapter(this, R.layout.alert_list_element, foodList);
-
-        lv.setAdapter(adapter); 	
         
-        lv.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
-			    confirmFood.setFoodName(adapter.getItem(arg2).getName());
-			    confirmFood.show(getSupportFragmentManager(), "confirm food");
+        if ( !foodList.isEmpty()){
+			// This is the array adapter, it takes the context of the activity as a
+			// first parameter, the type of list view as a second parameter and your
+			// array as a third parameter.
+			adapter = new AlertsListAdapter(this, R.layout.alert_list_element,
+					foodList);
+
+			lv.setAdapter(adapter);
+
+			lv.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
+					confirmFood.setFoodName(adapter.getItem(arg2).getName());
+					confirmFood.show(getSupportFragmentManager(),
+							"confirm food");
+				}
 			}
+
+			);
+		}
+        else{
+        	AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        	alertDialog.setTitle("No Food is Subscribed");
+        	alertDialog.setMessage("How about a French Toast ?");
+        	alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+        	   public void onClick(DialogInterface dialog, int which) {
+        	      // TODO Add your code for the button here.
+        	   }
+        	});
+        	// Set the Icon for the Dialog
+        	alertDialog.setIcon(R.drawable.ic_launcher);
+        	alertDialog.show();
         }
-	);
-	
 	
 	//end of onResume()
 	}

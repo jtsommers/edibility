@@ -10,17 +10,17 @@ import com.parse.PushService;
 public class FoodItem {
 
 	String displayName = "";
-	String channelName = "";
+	String channelName = ""; // last part-- no wierd fuhao
 	ArrayList<String> locations;
+	
 	private static final String LOG_TAG = "FoodItem";
 	
 	public FoodItem(String name){
 		this.displayName = name;
 
 		this.channelName = name;
-		this.channelName.toLowerCase(Locale.US);
-		this.channelName.replaceAll(" ", "");
-		this.channelName.replaceAll("[,.'\";:?!/&@#$%^*()]", "");
+		this.channelName = this.channelName.toLowerCase(Locale.US);
+		this.channelName = this.channelName.replaceAll("[\\s,.'\";:?!/\\&@#$%^*()]", "");
 		
 		this.locations = new ArrayList<String>();
 	}
@@ -46,7 +46,7 @@ public class FoodItem {
 		this.locations.add(dhall);
 		// Add to parse subscriptions
 		String channel = Utilities.parseString(dhall, this.displayName);
-		Log.i(LOG_TAG, "Unsubscribing from " + channel);
+	//	Log.i(LOG_TAG, "Unsubscribing from " + channel);
 		PushService.subscribe(
 				EdibilityApplication.getContext(), 
 				channel, 
@@ -57,17 +57,21 @@ public class FoodItem {
 		this.locations.remove(dhall);
 		// Unsubscribe from channel
 		String channel = Utilities.parseString(dhall, this.displayName);
-		Log.i(LOG_TAG, "Unsubscribing from " + channel);
+	//	Log.i(LOG_TAG, "Unsubscribing from " + channel);
 		PushService.unsubscribe(
 				EdibilityApplication.getContext(), 
 				channel);
 	}
 	
 	public String getLocationDisplay() {
-		String ret = "";
+		StringBuilder sb = new StringBuilder();
 		for (String s: locations) {
-			ret += (Utilities.getStringResourceByName(s) + ", ");
+			// Prepend a comma and space unless it's the first element
+			if (sb.length() != 0) {
+				sb.append(", ");
+			}
+			sb.append(Utilities.getStringResourceByName(s));
 		}
-		return ret;
+		return sb.toString();
 	}
 }
