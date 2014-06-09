@@ -122,6 +122,8 @@ public class FoodListActivity extends ActionBarActivity {
 			
 				((TextView) convertView).setText(foods.get(section).allFood.get(row));
 				
+				
+				((TextView) convertView).setTextColor(getResources().getColor(R.color.selector_white_gray));
 				//convertView.setBackgroundColor(R.color.blue);
 				//convertView.setBackgroundColor(getResources().getColor(R.color.silver));
 				
