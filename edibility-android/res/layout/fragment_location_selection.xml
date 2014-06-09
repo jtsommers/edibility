@@ -1,63 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widget69"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="top"
-    android:theme="@android:style/Theme.Holo" >
 
-    <Button
-        android:id="@+id/alerts"
-        android:layout_width="158dp"
-        android:layout_height="136dp"
-        android:layout_alignTop="@+id/stevenson"
-        android:layout_toRightOf="@+id/stevenson"
-        android:text="@string/alerts" 
-        android:onClick="alerts"/>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/porter"
-        android:layout_width="158dp"
-        android:layout_height="135dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/porter" 
-        android:onClick="porter"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" 
+        android:layout_weight="1">
 
-    <Button
-        android:id="@+id/nine"
-        android:layout_width="158dp"
-        android:layout_height="136dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/porter"
-        android:text="@string/nine"
-        android:onClick="nine" />
+        <Button
+            android:id="@+id/porter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:onClick="porter"
+            android:text="@string/porter" />
 
-    <Button
-        android:id="@+id/stevenson"
-        android:layout_width="158dp"
-        android:layout_height="136dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/nine"
-        android:text="@string/cowell" 
-        android:onClick="cowell"/>
+        <Button
+            android:id="@+id/eight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:text="@string/eight" 
+        	android:onClick="eight" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/crown"
-        android:layout_width="158dp"
-        android:layout_height="136dp"
-        android:layout_above="@+id/alerts"
-        android:layout_alignLeft="@+id/alerts"
-        android:text="@string/crown"
-        android:onClick="crown" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" 
+        android:layout_weight="1">
 
-    <Button
-        android:id="@+id/eight"
-        android:layout_width="158dp"
-        android:layout_height="136dp"
-        android:layout_alignLeft="@+id/crown"
-        android:layout_alignParentTop="true"
-        android:text="@string/eight" 
-        android:onClick="eight"/>
+        <Button
+            android:id="@+id/nine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+			android:text="@string/nine"
+    	    android:onClick="nine" />
+        <Button
+            android:id="@+id/crown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+     	   	android:text="@string/crown"
+       		android:onClick="crown" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" 
+        android:layout_weight="1" >
 
-</RelativeLayout>
+        <Button
+	        android:id="@+id/cowell"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+     	   	android:text="@string/cowell"
+       		android:onClick="cowell" />
+        <Button
+            android:id="@+id/alerts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:text="@string/alerts" 
+        	android:onClick="alerts"/> />
+    </LinearLayout>
+</LinearLayout>
