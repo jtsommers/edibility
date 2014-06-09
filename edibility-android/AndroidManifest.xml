@@ -48,6 +48,10 @@
             android:screenOrientation="portrait"
             android:label="@string/title_activity_food_list"
             android:parentActivityName="edu.ucsc.teambacon.edibility.LocationSelectionActivity" >
+            <intent-filter>
+                <action android:name="edu.ucsc.teambacon.edibility.ACTION_FOOD_LIST" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ucsc.teambacon.edibility.LocationSelectionActivity" />
