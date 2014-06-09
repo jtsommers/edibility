@@ -95,7 +95,7 @@ public class SubscribedAlertsActivity extends ActionBarActivity implements Confi
         else{
         	AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         	alertDialog.setTitle("No Food is Subscribed");
-        	alertDialog.setMessage("How about a French Toast ?");
+        	alertDialog.setMessage("     How about a French Toast ?");
         	alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
         	   public void onClick(DialogInterface dialog, int which) {
         	      // TODO Add your code for the button here.
