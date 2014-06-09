@@ -52,7 +52,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
 					if (json.has("college")) {
 						college = json.getString("college");
-						message = Utilities.getStringResourceByName(college);
+						message = Utilities.getStringResourceByName(college) + " now has " + food;
 					}
 
 					// Calls a function to define the notification

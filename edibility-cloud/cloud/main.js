@@ -8,7 +8,7 @@ Parse.Cloud.define("hello", function(request, response) {
 Parse.Cloud.define("testpush", function(request, response) {
 	Parse.Push.send(
 		{
-			channels: [ "foodalert_30_frenchwaffles" ],
+			channels: [ "foodalert_30_belgianwaffles" ],
 			data: {
 				header: "Test Notification Received",
 				action: "edu.ucsc.teambacon.edibility.MESSAGE",
