@@ -13,11 +13,11 @@
     <color name="holo_red_light">#ffff4444</color>
     <color name="holo_orange_light">#ffffbb33</color>
     <color name="silver">#C0C0C0</color>
-    <string name="cowell">Cowell/Stevenson</string>
-    <string name="crown">Crown/Merril</string>
-    <string name="eight">Eight/Oakes</string>
-    <string name="nine">Nine/Ten</string>
-    <string name="porter">Porter/Kresge</string>
+    <string name="cowell">Cowell Stevenson</string>
+    <string name="crown">Crown Merril</string>
+    <string name="eight">Eight Oakes</string>
+    <string name="nine">Nine Ten</string>
+    <string name="porter">Porter Kresge</string>
     <string name="alerts">Alerts</string>
 
 </resources>

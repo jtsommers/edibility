@@ -4,13 +4,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.os.Build;
+
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
@@ -29,12 +32,51 @@ public class LocationSelectionActivity extends ActionBarActivity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-		
 		//Parse says put it in onCreate whil notification works without the following code,
 		ParseAnalytics.trackAppOpened(getIntent());
 	
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		Button n=(Button) findViewById(R.id.porter);
+		Typeface typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
+		n.setTypeface(typeface);
+		n.setTextSize(40);
+		
+		n=(Button) findViewById(R.id.eight);
+		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
+		n.setTypeface(typeface);
+		n.setText("Eight\nOakes");
+		n.setTextSize(40);
+		
+		n=(Button) findViewById(R.id.nine);
+		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
+		n.setTypeface(typeface);
+		n.setText("Nine\nTen");
+		n.setTextSize(40);
+		
+		n=(Button) findViewById(R.id.crown);
+		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
+		n.setTypeface(typeface);
+		n.setTextSize(40);
+		
+		n=(Button) findViewById(R.id.cowell);
+		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
+		n.setTypeface(typeface);
+		n.setTextSize(35);
+		
+		n=(Button) findViewById(R.id.alerts);
+		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
+		n.setTypeface(typeface);
+		n.setTextSize(45);
+		
+		
+		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

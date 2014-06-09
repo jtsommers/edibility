@@ -24,73 +24,84 @@ public class NotificationReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-		ArrayList<FoodItem> foodlist = SavedPreferences.getInstance()
+		ArrayList<FoodItem> foodList = SavedPreferences.getInstance()
 				.getSavedFoodList();
 		FoodItem foodItem;
-		String saved = "";
+		String food = null;
+		String message = null;
 
-		// Toast.makeText(context, "Push received!",Toast.LENGTH_SHORT).show();
-		try {
-			String action = intent.getAction();
-			String channel = intent.getExtras().getString(
-					PARSE_JSON_CHANNEL_KEY);
+		// if there is food subscribed
+		if (!foodList.isEmpty()) {
+			try {
+				String action = intent.getAction();
+				String channel = intent.getExtras().getString(
+						PARSE_JSON_CHANNEL_KEY);
 
-			for (int i = 0; i < foodlist.size(); i++) {
-				foodItem = foodlist.get(i);
+				for (int i = 0; i < foodList.size(); i++) {
+					foodItem = foodList.get(i);
 
-				if (channel.indexOf(foodItem.channelName) != -1) {
-					saved = foodItem.displayName;
+					if (channel.indexOf(foodItem.channelName) != -1) {
+						food = foodItem.displayName;
+					}
 				}
+
+				if (food != null) {
+
+					JSONObject json = new JSONObject(intent.getExtras()
+							.getString(PARSE_DATA_KEY));
+
+					if (json.has("college")) {
+						college = json.getString("college");
+						message = Utilities.getStringResourceByName(college);
+					}
+
+					// Calls a function to define the notification
+					defineNotification(context, message);
+				} else
+					Log.i(LOG_TAG, "No matched subscribed food");
+
+			} catch (Exception e) {
+				Log.d(LOG_TAG, "JSONException: " + e.getMessage());
 			}
-
-			JSONObject json = new JSONObject(intent.getExtras().getString(
-					PARSE_DATA_KEY));
-
-			// String var = json.getString("header");
-			college = json.getString("college");
-
-			// TODO : a better message maybe
-			String message = Utilities.getStringResourceByName(college) + " now has " + saved;
-
-			// Calls a function to define the notification ( rington,content);
-			defineNotification(context, message);
-		} catch (Exception e) {
-			Log.d(LOG_TAG, "JSONException: " + e.getMessage());
+		} else {
+			Log.i(LOG_TAG, "No subsribed food");
 		}
-
 	}
 
-	public static void defineNotification(Context context,  String message) {
-	        // Show the notification
-	        long when = System.currentTimeMillis();
-	        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-	        
-	        
-	        Notification notification;
-	        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-	        builder.setContentText(message)
-	        		.setContentTitle(context.getString(R.string.app_name))
-	        		.setSmallIcon(R.drawable.ic_launcher)
-	        		.setWhen(when);
-	        
-	        // Build an intent to launch from notification
-	        Intent notificationIntent = new Intent(context, FoodListActivity.class);
-	        notificationIntent.putExtra("name", college);
+	public static void defineNotification(Context context, String message) {
+		// Show the notification
+		long when = System.currentTimeMillis();
+		NotificationManager notificationManager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
 
-	        // set intent so it does not start a new activity
-	        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-	        PendingIntent intent = PendingIntent.getActivity(context, 0, notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
-	        // Finish building notification
-	        builder.setContentIntent(intent);
-	        notification = builder.build();
-	        
-	        notification.vibrate = new long[] { 500, 500 };
-	        notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		Notification notification;
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(
+				context);
+		builder.setContentText(message)
+				.setContentTitle(context.getString(R.string.app_name))
+				.setSmallIcon(R.drawable.ic_launcher).setWhen(when);
 
-	        notification.flags = 
-	            Notification.FLAG_AUTO_CANCEL | 
-	            Notification.FLAG_SHOW_LIGHTS;
+		// Build an intent to launch from notification
+		Intent notificationIntent = new Intent(context, FoodListActivity.class);
+		notificationIntent.putExtra("name", college);
 
-	        notificationManager.notify(0, notification);
-	    }
+		// set intent so it does not start a new activity
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+				| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent intent = PendingIntent.getActivity(context, 0,
+				notificationIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
+		// Finish building notification
+		builder.setContentIntent(intent);
+		notification = builder.build();
+
+		notification.vibrate = new long[] { 500, 500 };
+		notification.sound = RingtoneManager
+				.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+		notification.flags = Notification.FLAG_AUTO_CANCEL
+				| Notification.FLAG_SHOW_LIGHTS;
+
+		notificationManager.notify(0, notification);
+	}
+
 }
