@@ -10,6 +10,7 @@ import android.content.Context;
 public class EdibilityApplication extends Application {
 	
 	private static Context c;
+	public static final String ACTION_FOOD_LIST = "edu.ucsc.teambacon.edibility.ACTION_FOOD_LIST";
 	
 	@Override
 	public void onCreate() {

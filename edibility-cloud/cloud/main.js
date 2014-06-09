@@ -8,10 +8,11 @@ Parse.Cloud.define("hello", function(request, response) {
 Parse.Cloud.define("testpush", function(request, response) {
 	Parse.Push.send(
 		{
-			channels: [ "here_is_a_ghost" ],
+			channels: [ "foodalert_30_frenchwaffles" ],
 			data: {
 				header: "Test Notification Received",
-				action: "edu.ucsc.teambacon.edibility.MESSAGE"
+				action: "edu.ucsc.teambacon.edibility.MESSAGE",
+				college: "eight"
 			}
 		}, 
 		{
