@@ -47,11 +47,10 @@ public class NotificationReceiver extends BroadcastReceiver {
 					PARSE_DATA_KEY));
 
 			// String var = json.getString("header");
-			college = Utilities.getStringResourceByName(json
-					.getString("college"));
+			college = json.getString("college");
 
 			// TODO : a better message maybe
-			String message = college + " now has " + saved;
+			String message = Utilities.getStringResourceByName(college) + " now has " + saved;
 
 			// Calls a function to define the notification ( rington,content);
 			defineNotification(context, message);
@@ -75,9 +74,8 @@ public class NotificationReceiver extends BroadcastReceiver {
 	        		.setWhen(when);
 	        
 	        // Build an intent to launch from notification
-	        Intent notificationIntent = new Intent(context, LocationSelectionActivity.class);
-//	        notificationIntent.putExtra("name", college);
-//	        notificationIntent.setAction(EdibilityApplication.ACTION_FOOD_LIST);
+	        Intent notificationIntent = new Intent(context, FoodListActivity.class);
+	        notificationIntent.putExtra("name", college);
 
 	        // set intent so it does not start a new activity
 	        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
