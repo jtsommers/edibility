@@ -41,40 +41,34 @@ public class LocationSelectionActivity extends ActionBarActivity {
 	protected void onResume() {
 		super.onResume();
 		
+		Typeface typeface = Typeface.createFromAsset(getAssets(), "AlteHaasGroteskRegular.ttf");
+		
 		Button n=(Button) findViewById(R.id.porter);
-		Typeface typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
 		n.setTypeface(typeface);
-		n.setTextSize(40);
+		n.setTextSize(30);
 		
 		n=(Button) findViewById(R.id.eight);
-		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
 		n.setTypeface(typeface);
 		n.setText("Eight\nOakes");
-		n.setTextSize(40);
+		n.setTextSize(30);
 		
 		n=(Button) findViewById(R.id.nine);
-		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
 		n.setTypeface(typeface);
 		n.setText("Nine\nTen");
-		n.setTextSize(40);
+		n.setTextSize(30);
 		
 		n=(Button) findViewById(R.id.crown);
-		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
 		n.setTypeface(typeface);
-		n.setTextSize(40);
+		n.setTextSize(30);
 		
 		n=(Button) findViewById(R.id.cowell);
-		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
 		n.setTypeface(typeface);
-		n.setTextSize(35);
+		n.setTextSize(25);
 		
 		n=(Button) findViewById(R.id.alerts);
-		typeface = Typeface.createFromAsset(getAssets(), "BebasNeue.otf");
 		n.setTypeface(typeface);
-		n.setTextSize(45);
-		
-		
-		
+		n.setTextSize(35);
+
 	}
 	
 	@Override
