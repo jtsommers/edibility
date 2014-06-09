@@ -5,13 +5,12 @@ import java.util.List;
 
 import edu.ucsc.teambacon.edibility.ConfirmFoodDialog.ConfirmFoodDialogListener;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,11 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.os.Build;
 
 public class SubscribedAlertsActivity extends ActionBarActivity implements ConfirmFoodDialogListener {
 
-    private static final String LOG_TAG = "SubscribedAlerts";
+    @SuppressWarnings("unused")
+	private static final String LOG_TAG = "SubscribedAlerts";
     AlertsListAdapter adapter;
     private ArrayList<FoodItem> foodList;
 	
@@ -91,23 +90,35 @@ public class SubscribedAlertsActivity extends ActionBarActivity implements Confi
 			}
 
 			);
-		}
-        else{
-        	AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        	alertDialog.setTitle("No Food is Subscribed");
-        	alertDialog.setMessage("     How about a French Toast ?");
-        	alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-        	   public void onClick(DialogInterface dialog, int which) {
-        	      // TODO Add your code for the button here.
-        	   }
-        	});
-        	// Set the Icon for the Dialog
-        	alertDialog.setIcon(R.drawable.ic_launcher);
-        	alertDialog.show();
+		} else {
+        	showEmptyListDialog();
         }
 	
 	//end of onResume()
 	}
+	
+	public void goBack() {
+		NavUtils.navigateUpFromSameTask(this);
+	}
+	
+	// Show a dialog when list is empty
+	public void showEmptyListDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.empty_list_alert_title)
+			.setMessage(R.string.empty_list_alert_text)
+			.setCancelable(false)
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					goBack();
+				}
+			})
+			.setIcon(R.drawable.ic_launcher);
+		AlertDialog alertDialog = builder.create();
+		alertDialog.show();
+	}
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -169,6 +180,9 @@ public class SubscribedAlertsActivity extends ActionBarActivity implements Confi
 	public void onFinishFoodDialog() {
 		foodList = SavedPreferences.getInstance().getSavedFoodList();
 		adapter.notifyDataSetChanged();
+		if (foodList.size() == 0) {
+			showEmptyListDialog();
+		}
 	}
 
 }

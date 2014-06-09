@@ -3,6 +3,8 @@ package edu.ucsc.teambacon.edibility;
 import java.util.ArrayList;
 
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -117,16 +119,21 @@ public class FoodListActivity extends ActionBarActivity {
 				if (convertView == null) {
 					convertView = (TextView) getLayoutInflater().inflate( getResources().getLayout(
 									android.R.layout.simple_list_item_1), null);
-				}
-				
+				}				
 			
-				((TextView) convertView).setText(foods.get(section).allFood.get(row));
+				Typeface typeface2 = Typeface.createFromAsset(getAssets(), "AlteHaasGroteskRegular.ttf");
 				
+<<<<<<< HEAD
 				
 				((TextView) convertView).setTextColor(getResources().getColor(R.color.selector_white_gray));
 				//convertView.setBackgroundColor(R.color.blue);
 				//convertView.setBackgroundColor(getResources().getColor(R.color.silver));
+=======
+>>>>>>> 65d97c122832a41d6a86ebc708fd609a72b7f656
 				
+				((TextView) convertView).setText(foods.get(section).allFood.get(row));
+				((TextView) convertView).setBackgroundColor(getResources().getColor(R.color.list_blue));
+				((TextView) convertView).setTypeface(typeface2);
 				return convertView;
 			}
 
@@ -144,12 +151,15 @@ public class FoodListActivity extends ActionBarActivity {
 							getResources().getLayout(
 									android.R.layout.simple_list_item_1), null);
 				}
-
+				
+				Typeface typeface1 = Typeface.createFromAsset(getAssets(), "AlteHaasGroteskBold.ttf");				
+				
 				switch (section) {
 				case 0:
 					if (data != null){
-						convertView.setBackgroundColor(getResources().getColor(R.color.holo_orange_light));
+						convertView.setBackgroundColor(getResources().getColor(R.color.header_orange));
 						((TextView) convertView).setText(data.results.meals.get(0).mealName);
+						((TextView) convertView).setTypeface(typeface1);
 					}
 					else{
 						convertView.setBackgroundColor(getResources().getColor(R.color.silver));
@@ -158,19 +168,21 @@ public class FoodListActivity extends ActionBarActivity {
 					break;
 					
 				case 1:
-					convertView.setBackgroundColor(getResources().getColor(R.color.holo_green_light));
+					convertView.setBackgroundColor(getResources().getColor(R.color.header_green));
 					((TextView) convertView).setText(data.results.meals.get(1).mealName);
-
+					((TextView) convertView).setTypeface(typeface1);
 					break;
 					
 				case 2:
 					((TextView) convertView).setText(data.results.meals.get(2).mealName);
-					convertView.setBackgroundColor(getResources().getColor(R.color.holo_orange_light));
+					((TextView) convertView).setTypeface(typeface1);
+					convertView.setBackgroundColor(getResources().getColor(R.color.header_red));
 					break;
 					
 				case 3:
-					convertView.setBackgroundColor(getResources().getColor(R.color.holo_red_light));
-					((TextView) convertView).setBackgroundColor(0x1ad6fd);
+					convertView.setBackgroundColor(getResources().getColor(R.color.header_red));
+
+					((TextView) convertView).setTypeface(typeface1);
 					break;
 				}
 				return convertView;
@@ -194,8 +206,13 @@ public class FoodListActivity extends ActionBarActivity {
 
 		setContentView(list);
 
+		list.getListView().setDivider(new ColorDrawable(0x000404));
+		list.getListView().setDividerHeight(2);
 	}
 
+	
+	
+	
 	/*
 	 * protected void onResume() { super.onResume();
 	 * 

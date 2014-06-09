@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="button_blue">#1ad6fd</color>
+    
+    <color name="list_blue">#60a2fc</color>
+    
+    <color name="header_green">#1afd41</color>
+    
+    <color name="header_orange">#fdb31a</color>
+    
+    <color name="header_red">#fd1a65</color>
+
+</resources>

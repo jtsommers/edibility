@@ -17,5 +17,7 @@
     <string name="nine">Nine Ten</string>
     <string name="porter">Porter Kresge</string>
     <string name="alerts">Alerts</string>
+    <string name="empty_list_alert_text">Check out the menu and tap on your favorite foods to subscribe to get notifications</string>
+    <string name="empty_list_alert_title">No Subscriptions</string>
 
 </resources>

@@ -1,7 +1,6 @@
 package edu.ucsc.teambacon.edibility.headerlistview_source;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -11,19 +10,10 @@ import android.view.animation.AlphaAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import edu.ucsc.teambacon.edibility.R;
-
-
 public class HeaderListView extends RelativeLayout {
-
-    // TODO: Handle listViews with fast scroll
-    // TODO: Pass ListView XML attributes to the mListView
-    // TODO: See if there are methods to dispatch to mListView
 
     private static final int FADE_DELAY    = 1000;
     private static final int FADE_DURATION = 2000;
@@ -295,7 +285,8 @@ public class HeaderListView extends RelativeLayout {
         mListView.addHeaderView(v);
     }
 
-    private float dpToPx(float dp) {
+    @SuppressWarnings("unused")
+	private float dpToPx(float dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
     }
 
