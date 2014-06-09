@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
@@ -57,7 +58,7 @@ public class FoodListActivity extends ActionBarActivity {
 
 		super.onCreate(savedInstanceState);
 		
-		
+	
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -171,8 +172,7 @@ public class FoodListActivity extends ActionBarActivity {
 				((TextView) convertView).setText(mealName);
 				switch (mealName.substring(0, mealName.indexOf(" ")).toLowerCase()){
 					case "breakfast":
-						convertView.setBackgroundColor(getResources().getColor(R.color.header_orange));
-					
+						convertView.setBackgroundColor(getResources().getColor(R.color.header_orange));	
 						break;
 					case "lunch":
 						convertView.setBackgroundColor(getResources().getColor(R.color.header_green));
@@ -194,8 +194,17 @@ public class FoodListActivity extends ActionBarActivity {
 					int section, int row, long id) {
 				super.onRowItemClick(parent, view, section, row, id);
 
-		
+			/*	 Animation mAnimation = new AlphaAnimation(1, 0);
+				    mAnimation.setDuration(1);
+				    mAnimation.setInterpolator(new LinearInterpolator());
+				    mAnimation.setRepeatCount(Animation.INFINITE);
+				    mAnimation.setRepeatMode(Animation.REVERSE); 
+				  
+
 				
+				parent.getChildAt(section).startAnimation(mAnimation);
+				//  parent.getChildAt(section).setBackgroundColor(R.drawable.ic_launcher);
+				*/
 				//display  dialog
 				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
 			    confirmFood.setFoodName((String)getRowItem(section, row));
@@ -247,9 +256,9 @@ public class FoodListActivity extends ActionBarActivity {
 					e.printStackTrace();
 				}
 
-				if (data.lastrunstatus.equalsIgnoreCase("failure")) {
-					data = null;
-				} 
+			//	if (data.lastrunstatus.equalsIgnoreCase("failure")) {
+				//	data = null;
+				//} 
 				
 				
 				sanitizeData();
