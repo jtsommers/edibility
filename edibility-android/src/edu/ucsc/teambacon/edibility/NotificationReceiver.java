@@ -19,7 +19,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 	public static final String LOG_TAG = "NotificationReceiver";
 	public static final String PARSE_DATA_KEY = "com.parse.Data";
 	public static final String PARSE_JSON_CHANNEL_KEY = "com.parse.Channel";
-	public static String college = "";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -29,6 +28,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 		FoodItem foodItem;
 		String food = null;
 		String message = null;
+		String college = "nine";
 
 		// if there is food subscribed
 		if (!foodList.isEmpty()) {
@@ -56,7 +56,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 					}
 
 					// Calls a function to define the notification
-					defineNotification(context, message);
+					defineNotification(context, message, college);
 				} else
 					Log.i(LOG_TAG, "No matched subscribed food");
 
@@ -68,7 +68,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 		}
 	}
 
-	public static void defineNotification(Context context, String message) {
+	public static void defineNotification(Context context, String message, String college) {
 		// Show the notification
 		long when = System.currentTimeMillis();
 		NotificationManager notificationManager = (NotificationManager) context
