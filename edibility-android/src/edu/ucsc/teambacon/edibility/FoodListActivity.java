@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,6 +62,8 @@ public class FoodListActivity extends ActionBarActivity {
 			
 			// Set the action bar title
 			setTitle(Utilities.getStringResourceByName(dHallName));
+		} else {
+			Log.d(LOG_TAG, "Not reading extras");
 		}
 
 		if (downloader == null
