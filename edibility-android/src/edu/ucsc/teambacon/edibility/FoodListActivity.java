@@ -3,6 +3,7 @@ package edu.ucsc.teambacon.edibility;
 import java.util.ArrayList;
 
 import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
@@ -86,7 +89,11 @@ public class FoodListActivity extends ActionBarActivity {
 	public void createHeaderListView() {
 
 		list = new HeaderListView(this);
+		list.getListView().setBackgroundColor(R.drawable.abc_list_pressed_holo_light);
+	//	list.getListView().setBackgroundDrawable(getWallpaper());
+		
 		list.setAdapter(new SectionAdapter() {
+		
 			
 			@Override
 			public int numberOfSections() {
@@ -123,17 +130,19 @@ public class FoodListActivity extends ActionBarActivity {
 			
 				Typeface typeface2 = Typeface.createFromAsset(getAssets(), "AlteHaasGroteskRegular.ttf");
 				
-<<<<<<< HEAD
 				
-				((TextView) convertView).setTextColor(getResources().getColor(R.color.selector_white_gray));
 				//convertView.setBackgroundColor(R.color.blue);
 				//convertView.setBackgroundColor(getResources().getColor(R.color.silver));
-=======
->>>>>>> 65d97c122832a41d6a86ebc708fd609a72b7f656
+
 				
 				((TextView) convertView).setText(foods.get(section).allFood.get(row));
-				((TextView) convertView).setBackgroundColor(getResources().getColor(R.color.list_blue));
-				((TextView) convertView).setTypeface(typeface2);
+			//	((TextView) convertView).setBackgroundColor(getResources().getColor(R.color.list_blue));
+				//((TextView) convertView).setTypeface(typeface2);
+			//	((TextView) convertView).setTextColor(getResources().getColor(R.color.selector_white_gray));
+				
+
+				
+				
 				return convertView;
 			}
 
@@ -193,6 +202,7 @@ public class FoodListActivity extends ActionBarActivity {
 					int section, int row, long id) {
 				super.onRowItemClick(parent, view, section, row, id);
 
+		
 				
 				//display  dialog
 				ConfirmFoodDialog confirmFood = new ConfirmFoodDialog();
