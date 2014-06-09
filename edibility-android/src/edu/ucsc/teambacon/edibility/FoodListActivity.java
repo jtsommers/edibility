@@ -89,7 +89,7 @@ public class FoodListActivity extends ActionBarActivity {
 	public void createHeaderListView() {
 
 		list = new HeaderListView(this);
-		list.getListView().setBackgroundColor(R.drawable.abc_list_pressed_holo_light);
+	//	list.getListView().setBackgroundColor(getResources().getColor(R.color.list_blue));
 	//	list.getListView().setBackgroundDrawable(getWallpaper());
 		
 		list.setAdapter(new SectionAdapter() {
@@ -136,9 +136,9 @@ public class FoodListActivity extends ActionBarActivity {
 
 				
 				((TextView) convertView).setText(foods.get(section).allFood.get(row));
-			//	((TextView) convertView).setBackgroundColor(getResources().getColor(R.color.list_blue));
-				//((TextView) convertView).setTypeface(typeface2);
-			//	((TextView) convertView).setTextColor(getResources().getColor(R.color.selector_white_gray));
+				((TextView) convertView).setBackgroundColor(getResources().getColor(R.color.list_blue));
+				((TextView) convertView).setTypeface(typeface2);
+				((TextView) convertView).setTextColor(getResources().getColor(R.drawable.selector_white_gray));
 				
 
 				
