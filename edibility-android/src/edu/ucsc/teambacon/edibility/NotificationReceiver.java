@@ -28,63 +28,80 @@ public class NotificationReceiver extends BroadcastReceiver {
 	 @Override
 	 public void onReceive(Context context, Intent intent) {
 		 
-
-	     ArrayList<FoodItem> foodlist = SavedPreferences.getInstance().getSavedFoodList();
+	     ArrayList<FoodItem> foodList = SavedPreferences.getInstance().getSavedFoodList();
 		 FoodItem foodItem;
-		 String saved = "";
+		 String food = null;
+		 String message = null;
 		 
-		//Toast.makeText(context, "Push received!",Toast.LENGTH_SHORT).show();
-		 try {
-	            String action = intent.getAction();
-	            String channel = intent.getExtras().getString( PARSE_JSON_CHANNEL_KEY );
-	            
-	            for (int i = 0; i < foodlist.size(); i ++){
-	            	foodItem = foodlist.get(i);
-	            	
-	            	if (channel.indexOf(foodItem.channelName) != -1)	{
-	            		saved = foodItem.displayName;
-	            	}
-	            }
-	           
-	            JSONObject json = new JSONObject(intent.getExtras().getString(PARSE_DATA_KEY ));
-	        
-	           // String var = json.getString("header"); 
-	            String college =  Utilities.getStringResourceByName(json.getString("college"));
-	          
-	            //TODO : a better message maybe
-	            String message = college + " now has " + saved;
-	            
-	            // Calls a function to define the notification ( rington,content);
-	            defineNotification(context,  message);
-	        } catch (Exception e) {
-	            Log.d(LOG_TAG, "JSONException: " + e.getMessage());
-	        }
+		 
+		 // if there is food subscribed
+		 if (!foodList.isEmpty()){
+			try {
+				String action = intent.getAction();
+				String channel = intent.getExtras().getString(
+						PARSE_JSON_CHANNEL_KEY);
+
+				for (int i = 0; i < foodList.size(); i++) {
+					foodItem = foodList.get(i);
+
+					if (channel.indexOf(foodItem.channelName) != -1) {
+						food = foodItem.displayName;
+					}
+				}
+
+				if (food != null) {
+
+					JSONObject json = new JSONObject(intent.getExtras()
+							.getString(PARSE_DATA_KEY));
+
+					if (json.has("college"))
+						message = Utilities.getStringResourceByName(json
+								.getString("college")) + " now has " + food;
+
+					// Calls a function to define the notification 
+					defineNotification(context, message);
+				} else
+					Log.i(LOG_TAG, "No matched subsribed food");
+
+			} catch (Exception e) {
+				Log.d(LOG_TAG, "JSONException: " + e.getMessage());
+			}
+		 }
+		 else 
+			 Log.i(LOG_TAG, "No subsribed food");
 
 	}
 	 
-	 public static void defineNotification(Context context,  String message) {
-	        // Show the notification
-	        long when = System.currentTimeMillis();
-	        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-	        
-	        //TODO - change square-shape launching icon
-	        Notification notification = new Notification(R.drawable.ic_launcher, message,when);
-	       
-	        String title = context.getString(R.string.app_name);
-	        
-	        Intent notificationIntent = new Intent(context, NotificationReceiver.class);
+	 public static void defineNotification(Context context, String message) {
+		// Show the notification
 
-	        // set intent so it does not start a new activity
-	        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-	        PendingIntent intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-	        notification.setLatestEventInfo(context, title, message, intent);
-	        notification.vibrate = new long[] { 500, 500 };
-	        notification.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		long when = System.currentTimeMillis();
+		NotificationManager notificationManager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
 
-	        notification.flags = 
-	            Notification.FLAG_AUTO_CANCEL | 
-	            Notification.FLAG_SHOW_LIGHTS;
+		// TODO - change square-shape launching icon
+		Notification notification = new Notification(R.drawable.ic_launcher,
+				message, when);
 
-	        notificationManager.notify(0, notification);
-	    }
+		String title = context.getString(R.string.app_name);
+
+		Intent notificationIntent = new Intent(context,
+				NotificationReceiver.class);
+
+		// set intent so it does not start a new activity
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+				| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent intent = PendingIntent.getActivity(context, 0,
+				notificationIntent, 0);
+		notification.setLatestEventInfo(context, title, message, intent);
+		notification.vibrate = new long[] { 500, 500 };
+		notification.sound = RingtoneManager
+				.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+		notification.flags = Notification.FLAG_AUTO_CANCEL
+				| Notification.FLAG_SHOW_LIGHTS;
+
+		notificationManager.notify(0, notification);
+
+	}
 }
