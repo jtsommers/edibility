@@ -82,6 +82,6 @@
             android:layout_weight="1"
             android:background="@drawable/button"
             android:text="@string/alerts" 
-        	android:onClick="alerts"/> />
+        	android:onClick="alerts"/>
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,5 @@
 package edu.ucsc.teambacon.edibility.headerlistview_source;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;

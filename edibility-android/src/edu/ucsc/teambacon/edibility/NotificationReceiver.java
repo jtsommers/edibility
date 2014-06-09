@@ -33,7 +33,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 		// if there is food subscribed
 		if (!foodList.isEmpty()) {
 			try {
-				String action = intent.getAction();
+//				String action = intent.getAction();
 				String channel = intent.getExtras().getString(
 						PARSE_JSON_CHANNEL_KEY);
 
