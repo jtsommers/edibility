@@ -94,7 +94,7 @@ public class ConfirmFoodDialog extends DialogFragment {
 	               }
 	           })
 	    // Set the action buttons
-	           .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	           .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 	               @Override
 	               public void onClick(DialogInterface dialog, int id) {
 	                   // User clicked OK, so save the mSelectedItems results somewhere
@@ -112,7 +112,7 @@ public class ConfirmFoodDialog extends DialogFragment {
 	            	   }
 	               }
 	           })
-	           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+	           .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 	               @Override
 	               public void onClick(DialogInterface dialog, int id) {
 	               
