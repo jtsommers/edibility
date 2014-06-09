@@ -3,16 +3,15 @@ package edu.ucsc.teambacon.edibility;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import android.util.Log;
-
 import com.parse.PushService;
 
 public class FoodItem {
 
 	String displayName = "";
-	String channelName = ""; // last part-- no wierd fuhao
+	String channelName = "";
 	ArrayList<String> locations;
 	
+	@SuppressWarnings("unused")
 	private static final String LOG_TAG = "FoodItem";
 	
 	public FoodItem(String name){
@@ -46,7 +45,7 @@ public class FoodItem {
 		this.locations.add(dhall);
 		// Add to parse subscriptions
 		String channel = Utilities.parseString(dhall, this.displayName);
-	//	Log.i(LOG_TAG, "Unsubscribing from " + channel);
+//		Log.i(LOG_TAG, "Unsubscribing from " + channel);
 		PushService.subscribe(
 				EdibilityApplication.getContext(), 
 				channel, 
@@ -57,7 +56,7 @@ public class FoodItem {
 		this.locations.remove(dhall);
 		// Unsubscribe from channel
 		String channel = Utilities.parseString(dhall, this.displayName);
-	//	Log.i(LOG_TAG, "Unsubscribing from " + channel);
+//		Log.i(LOG_TAG, "Unsubscribing from " + channel);
 		PushService.unsubscribe(
 				EdibilityApplication.getContext(), 
 				channel);

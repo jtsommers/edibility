@@ -59,7 +59,11 @@
         <activity
             android:name="edu.ucsc.teambacon.edibility.SubscribedAlertsActivity"
             android:screenOrientation="portrait"
+            android:parentActivityName="edu.ucsc.teambacon.edibility.LocationSelectionActivity"
             android:label="@string/title_activity_subscribed_alerts" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ucsc.teambacon.edibility.LocationSelectionActivity" />
         </activity>
         
         <!-- Parse API for Push Notifications -->

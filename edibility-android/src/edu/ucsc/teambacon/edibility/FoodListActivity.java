@@ -43,7 +43,7 @@ public class FoodListActivity extends ActionBarActivity {
 	private ArrayList<String> meals;
 
 	public String dHall = "&locationNum=";
-	public String dHallCode = null;
+	//public String dHallCode = null;
 	
 	private ProgressDialog progressDialog;
 	
@@ -59,8 +59,7 @@ public class FoodListActivity extends ActionBarActivity {
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			String dHallName = extras.getString("name");
-			dHallCode = Utilities.getLocationCode(dHallName);
-			dHall += (dHallCode);
+			dHall += Utilities.getLocationCode(dHallName);
 			
 			// Set the action bar title
 			setTitle(Utilities.getStringResourceByName(dHallName));
