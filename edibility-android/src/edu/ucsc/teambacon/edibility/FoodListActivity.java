@@ -136,9 +136,9 @@ public class FoodListActivity extends ActionBarActivity {
 
 				
 				((TextView) convertView).setText(foods.get(section).allFood.get(row));
-			//	((TextView) convertView).setBackgroundColor(getResources().getColor(R.color.list_blue));
-				//((TextView) convertView).setTypeface(typeface2);
-			//	((TextView) convertView).setTextColor(getResources().getColor(R.color.selector_white_gray));
+				((TextView) convertView).setBackgroundColor(getResources().getColor(R.color.list_blue));
+				((TextView) convertView).setTypeface(typeface2);
+				((TextView) convertView).setTextColor(getResources().getColor(R.color.selector_white_gray));
 				
 
 				
@@ -163,37 +163,25 @@ public class FoodListActivity extends ActionBarActivity {
 				
 				Typeface typeface1 = Typeface.createFromAsset(getAssets(), "AlteHaasGroteskBold.ttf");				
 				
-				switch (section) {
-				case 0:
-					if (data != null){
+				String mealName = data.results.meals.get(section).mealName;
+				((TextView) convertView).setText(mealName);
+				switch (mealName.substring(0, mealName.indexOf(" ")).toLowerCase()){
+					case "breakfast":
 						convertView.setBackgroundColor(getResources().getColor(R.color.header_orange));
-						((TextView) convertView).setText(data.results.meals.get(0).mealName);
-						((TextView) convertView).setTypeface(typeface1);
-					}
-					else{
-						convertView.setBackgroundColor(getResources().getColor(R.color.silver));
-						((TextView) convertView).setText("The dinning hall is closed today.");
-					}
-					break;
 					
-				case 1:
-					convertView.setBackgroundColor(getResources().getColor(R.color.header_green));
-					((TextView) convertView).setText(data.results.meals.get(1).mealName);
-					((TextView) convertView).setTypeface(typeface1);
-					break;
-					
-				case 2:
-					((TextView) convertView).setText(data.results.meals.get(2).mealName);
-					((TextView) convertView).setTypeface(typeface1);
-					convertView.setBackgroundColor(getResources().getColor(R.color.header_red));
-					break;
-					
-				case 3:
-					convertView.setBackgroundColor(getResources().getColor(R.color.header_red));
-
-					((TextView) convertView).setTypeface(typeface1);
-					break;
+						break;
+					case "lunch":
+						convertView.setBackgroundColor(getResources().getColor(R.color.header_green));
+						//((TextView) convertView).setText(mealName);
+						break;
+					case "dinner":
+						convertView.setBackgroundColor(getResources().getColor(R.color.header_red));
+						//((TextView) convertView).setText(mealName);
+						break;
+						
 				}
+					
+				
 				return convertView;
 			}
 
