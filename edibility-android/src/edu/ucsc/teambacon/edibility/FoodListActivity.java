@@ -256,9 +256,9 @@ public class FoodListActivity extends ActionBarActivity {
 					e.printStackTrace();
 				}
 
-			//	if (data.lastrunstatus.equalsIgnoreCase("failure")) {
-				//	data = null;
-				//} 
+				if (data.lastrunstatus.equalsIgnoreCase("failure")) {
+					data = null;
+				} 
 				
 				
 				sanitizeData();
