@@ -1,5 +1,8 @@
 package edu.ucsc.teambacon.edibility.headerlistview_source;
 
+// Header ListView an Open Source project by Applidium
+// Project page: http://applidium.github.io/HeaderListView/
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;

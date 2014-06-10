@@ -1,9 +1,9 @@
 package edu.ucsc.teambacon.edibility;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.ProgressDialog;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,9 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
@@ -166,11 +163,12 @@ public class FoodListActivity extends ActionBarActivity {
 									android.R.layout.simple_list_item_1), null);
 				}
 				
-				Typeface typeface1 = Typeface.createFromAsset(getAssets(), "AlteHaasGroteskBold.ttf");				
+//				Typeface typeface1 = Typeface.createFromAsset(getAssets(), "AlteHaasGroteskBold.ttf");				
 				
 				String mealName = data.results.meals.get(section).mealName;
 				((TextView) convertView).setText(mealName);
-				switch (mealName.substring(0, mealName.indexOf(" ")).toLowerCase()){
+				String mealType = mealName.substring(0, mealName.indexOf(" ")).toLowerCase(Locale.US);
+				switch (mealType){
 					case "breakfast":
 						convertView.setBackgroundColor(getResources().getColor(R.color.header_orange));	
 						break;
@@ -252,7 +250,6 @@ public class FoodListActivity extends ActionBarActivity {
 				try {
 					data = gson.fromJson(s, KimonoData.class);
 				} catch (JsonSyntaxException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
