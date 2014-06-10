@@ -1,10 +1,14 @@
+// 
+// Cloud functions and jobs
+// 
+// Functions are created with Parse.Cloud.define and are triggered by using a URL
+//  with POST parameters (things like API key, etc)
+// 
+// Jobs are created with Parse.Cloud.job and are available in the Parse dashboard for
+//  Edibility to be scheduled to run at specific times
+// 
 
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function(request, response) {
-	response.success("Hello world!");
-});
-
+// Test function to send a single notification that mimics an actual food subscription
 Parse.Cloud.define("testpush", function(request, response) {
 	Parse.Push.send(
 		{
@@ -28,6 +32,7 @@ Parse.Cloud.define("testpush", function(request, response) {
 	);
 });
 
+// Test function to send a single notification to a development subscription channel
 Parse.Cloud.job("testjob", function(request, response) {
 	Parse.Push.send(
 		{
@@ -50,19 +55,8 @@ Parse.Cloud.job("testjob", function(request, response) {
 	);
 });
 
-Parse.Cloud.define("testmenu", function(request, response) {
-	var Menu = require('cloud/menu.js').Menu;
-	var testMenu = new Menu(
-		'eight', 
-		function(){
-			response.success("Success downloading test menu");
-		}, 
-		function(error) {
-			response.error(error);
-		}
-	);
-});
-
+// Initial concept for notifying all dining halls for a specific meal
+// Uses notifications on a per food-college basis which turned out to not be possible within limitations
 Parse.Cloud.job("notifybreakfast", function(request, response) {
 	var Menu = require('cloud/menu.js').Menu;
 	Menu.notifyAllForMeal(
@@ -78,22 +72,10 @@ Parse.Cloud.job("notifybreakfast", function(request, response) {
 	);
 });
 
-Parse.Cloud.define("notifybreakfast", function(request, response) {
-	var Menu = require('cloud/menu.js').Menu;
-	Menu.notifyAllForMeal(
-		"breakfast", 
-		{
-			"success": function() {
-				response.success("All notifications for breakfast sent");
-			},
-			"error": function(error) {
-				response.error(error);
-			}
-		}
-	);
-});
-
-Parse.Cloud.job("notifybreakfast2", function(request, response) {
+// 
+// Scheduled jobs to notify individual meals as a group of notification channels
+// 
+Parse.Cloud.job("notifybreakfastgroup", function(request, response) {
 	var Menu = require('cloud/menu.js').Menu;
 	Menu.notifyMealsOnly(
 		"breakfast", 
@@ -108,7 +90,7 @@ Parse.Cloud.job("notifybreakfast2", function(request, response) {
 	);
 });
 
-Parse.Cloud.job("notifylunch2", function(request, response) {
+Parse.Cloud.job("notifylunchgroup", function(request, response) {
 	var Menu = require('cloud/menu.js').Menu;
 	Menu.notifyMealsOnly(
 		"lunch", 
@@ -123,7 +105,7 @@ Parse.Cloud.job("notifylunch2", function(request, response) {
 	);
 });
 
-Parse.Cloud.job("notifydinner2", function(request, response) {
+Parse.Cloud.job("notifydinnergroup", function(request, response) {
 	var Menu = require('cloud/menu.js').Menu;
 	Menu.notifyMealsOnly(
 		"dinner", 
@@ -137,7 +119,15 @@ Parse.Cloud.job("notifydinner2", function(request, response) {
 		}
 	);
 });
+// 
+// End of scheduled jobs for notifying meals
+// 
 
+
+// Concept job that was intended to notify each meal and college separately
+// The idea was that in Parse, there would be 15 different jobs and parameters would differentiate the job
+// Parse jobs don't support running multiple scheduled jobs from a single job function
+// Ultimately this job isn't used
 Parse.Cloud.job("granularnotifications", function(request, response) {
 	if (request.params && request.params.meal && request.params.college) {
 		var Menu = require('cloud/menu.js').Menu;

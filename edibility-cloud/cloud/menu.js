@@ -1,3 +1,13 @@
+// 
+// Dining Hall Menu Class
+// 
+// Retrieves and sanitizes json data from the edibility Kimono API
+// Also defines several static functions for interfacing with push notifications based on data
+// 
+// Available for import in other Parse Server Javascript code using:
+//  var Menu = require('cloud/menu.js').Menu;
+// 
+
 // "Constants" needed for translating college names to location numbers
 var DINING_HALLS = {
 	"cowell"	: "05",
