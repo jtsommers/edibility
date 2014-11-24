@@ -163,26 +163,19 @@ public class FoodListActivity extends ActionBarActivity {
 									android.R.layout.simple_list_item_1), null);
 				}
 				
-//				Typeface typeface1 = Typeface.createFromAsset(getAssets(), "AlteHaasGroteskBold.ttf");				
-				
 				String mealName = data.results.meals.get(section).mealName;
 				((TextView) convertView).setText(mealName);
-				String mealType = mealName.substring(0, mealName.indexOf(" ")).toLowerCase(Locale.US);
-				switch (mealType){
-					case "breakfast":
-						convertView.setBackgroundColor(getResources().getColor(R.color.header_orange));	
-						break;
-					case "lunch":
-						convertView.setBackgroundColor(getResources().getColor(R.color.header_green));
-						//((TextView) convertView).setText(mealName);
-						break;
-					case "dinner":
-						convertView.setBackgroundColor(getResources().getColor(R.color.header_red));
-						//((TextView) convertView).setText(mealName);
-						break;
-						
-				}
-					
+				String mealType = mealName.toLowerCase(Locale.US);
+				if (mealType.startsWith("breakfast")) {
+					convertView.setBackgroundColor(getResources().getColor(R.color.header_orange));
+				} else if (mealType.startsWith("lunch")) {
+					convertView.setBackgroundColor(getResources().getColor(R.color.header_green));
+				} else if (mealType.startsWith("dinner")) {
+					convertView.setBackgroundColor(getResources().getColor(R.color.header_red));
+				} else {
+					// Fallback header color
+					convertView.setBackgroundColor(getResources().getColor(R.color.header_orange));
+				}	
 				
 				return convertView;
 			}
